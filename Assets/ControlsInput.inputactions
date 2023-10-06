@@ -7,26 +7,26 @@
             "actions": [
                 {
                     "name": "Movement",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "a95bb522-92d2-4349-885f-2b713fbb17fe",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Look",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "87a781c1-ae23-4b76-af29-4aadc5a9f13e",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
-                    "name": "2D Vec (ras specific joystick)",
+                    "name": "2D Vec (ras specific joystick no touchy)",
                     "id": "fc246b3f-7c4c-4ba9-a693-40e1ec24fad7",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
@@ -191,8 +191,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
-                    "id": "aa4f99fb-e87b-4e32-becd-0d26e0f97162",
+                    "name": "2D Vector (ras Specific joystick no touchy) ",
+                    "id": "8334d8e4-b81f-426a-a6d0-6f07bf4698d8",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
@@ -202,31 +202,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "ec6d06dd-b8f3-47cb-b04f-22835b63b73d",
-                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/rz",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "down",
-                    "id": "881ebca4-334a-4399-85b1-bc3db36ceb9c",
+                    "id": "1ae23b56-1db6-44cb-8f97-794c5618ec5b",
                     "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/rz",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "6856bc92-6cad-4889-8427-d519464b1ab0",
-                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -236,8 +214,63 @@
                 },
                 {
                     "name": "right",
-                    "id": "0acea8f6-5db5-454a-ad42-81dc0bb5fc62",
+                    "id": "cd71e296-f410-495c-90f2-88bc770ca315",
                     "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "2D Vector keyboard",
+                    "id": "ce4e0cb2-7471-4e8b-990f-5c139aaa7651",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "33ac566c-cd35-4a47-aa4e-81a5db6f16ca",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "a72a2845-c575-4a8b-b01d-a5a6a28a86c6",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "a7fb500f-0845-4e55-b19b-fc23147c21da",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "6b3a5788-9125-4ecc-9e18-3964eab7b300",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
