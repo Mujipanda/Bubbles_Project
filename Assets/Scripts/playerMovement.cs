@@ -104,7 +104,7 @@ public class playerMovement : MonoBehaviour
 
     void OnJump()
     {
-        Debug.Log("Jump");
+        //Debug.Log("Jump");
 
         if (allowjump)
             StartCoroutine(lerpJump(-1, 1));
