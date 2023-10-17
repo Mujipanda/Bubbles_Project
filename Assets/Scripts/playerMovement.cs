@@ -47,7 +47,7 @@ public class playerMovement : MonoBehaviour
     //private float timeElapsed = 0;
 
     //##___bools___##
-    private bool delayBool = true, coroBool = true;
+    private bool delayBool = true;//, coroBool = true;
     public bool allowjump = false, isFalling = false, isJumping = false, cancelJump = false;
 
     //##___GameObjects___##
@@ -249,7 +249,7 @@ public class playerMovement : MonoBehaviour
         camObj.transform.position = target.transform.position;// camera follow chase object
 
         target.transform.position = Vector3.SmoothDamp(target.transform.position, gameObject.transform.position, ref velocity, followDelay * Time.deltaTime);// creates a damped interpolrant between the actual player and what the camerea follows
-
+        target.transform.rotation = camObj.transform.rotation;
         
         fixedGravity();
 

@@ -1,5 +1,5 @@
 {
-    "name": "ControlsInput",
+    "name": "ControlsInputs",
     "maps": [
         {
             "name": "Player",
@@ -27,6 +27,33 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "58e33f22-b047-4bbb-a3dd-6336cf7d896e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "f8a690c0-fa86-4517-9e64-c2909f736fdb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ColourUp",
+                    "type": "Button",
+                    "id": "9809a788-9e81-46b7-b8ba-a16640c75969",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ColourDown",
+                    "type": "Button",
+                    "id": "79845abd-898e-4874-a15f-481009f2a453",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -427,6 +454,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a4d0110-cd21-4cda-8483-ee8c5c57cffd",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "064a82ed-da59-4954-aae8-7e5cff3be0e4",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ColourUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5fafc2f-813f-4792-8189-e9d2a824cf4d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ColourUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff921eb4-987d-4b78-b092-67c4786161f4",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ColourDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0be8a289-7884-46ec-9cab-1900e6ccfd49",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ColourDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
