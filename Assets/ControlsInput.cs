@@ -492,6 +492,17 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""fad8f9b8-fa17-455a-9ac1-5b7e284be25b"",
+                    ""path"": ""<XInputController>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""064a82ed-da59-4954-aae8-7e5cff3be0e4"",
                     ""path"": ""<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button6"",
                     ""interactions"": """",
@@ -514,6 +525,17 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""22839307-a0b6-41d1-8154-d1e85beb6942"",
+                    ""path"": ""<XInputController>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ColourUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""ff921eb4-987d-4b78-b092-67c4786161f4"",
                     ""path"": ""<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button5"",
                     ""interactions"": """",
@@ -527,6 +549,17 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""0be8a289-7884-46ec-9cab-1900e6ccfd49"",
                     ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ColourDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d580b66e-3b24-486a-8c1f-ecade09b723e"",
+                    ""path"": ""<XInputController>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

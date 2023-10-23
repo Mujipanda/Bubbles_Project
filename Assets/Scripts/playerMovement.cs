@@ -132,6 +132,7 @@ public class playerMovement : MonoBehaviour
 
         while (timeElapsed < duration && !cancelJump)
         {
+            
             float t = timeElapsed / duration;
             lerpedValue = Mathf.Lerp(start, end, t);
             timeElapsed += Time.deltaTime;
