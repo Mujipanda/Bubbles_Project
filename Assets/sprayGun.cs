@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class sprayGun : MonoBehaviour
 {
@@ -8,14 +9,26 @@ public class sprayGun : MonoBehaviour
     private GameObject currentGameObject;
     private Renderer rend;
     private Vector3 gizmoPoint = Vector3.zero;
-
+    private Color colour;
+    ControlsInputs controls;
     private int selectedColour = 0;
-    Color colour;
+   
+
+    int[,] colourRBGValues = new int[5, 3]{ // [ number of rows, number colums]
+        //R    G    B
+        { 153, 255, 153 },// green
+        { 255, 255, 153 },// yellow
+        { 255, 153, 255 },// pink
+        { 153, 255, 255 },// blue
+        { 255, 204, 102 },// orange
+    };
+
 
     private void Awake()
     {
         rend = GetComponent<Renderer>();
         colour = new Color(1.0f, 1.0f, 1.0f);
+        controls = new ControlsInputs();
 
     }
 
@@ -52,7 +65,7 @@ public class sprayGun : MonoBehaviour
     }
     void rayCastingGunHit()
     {
-
+        
         RaycastHit hit;
         if (Physics.Raycast(gunTransform.position, cameraTransform.forward, out hit, 20))
         {
@@ -61,13 +74,67 @@ public class sprayGun : MonoBehaviour
             gizmoPoint = hit.point;
             currentGameObject = hit.transform.gameObject;
             colour = currentGameObject.GetComponent<Renderer>().material.color;
-            switch (selectedColour)
+
+            ChangeColour(selectedColour, colour);
+           /* switch (selectedColour)
             {
                 case 0:
                     Debug.Log("green");
+                    
+                    if ((colour.r * 255) < colourRBGValues[0, 0])
+                    {
+                        colour.r += 0.05f;
+                    }
+                    if ((colour.g * 255) < colourRBGValues[0,1])
+                    {
+                        colour.g += 0.05f;
+                    }
+                    if((colour.b * 255) <= colourRBGValues[0,2])
+                    {
+                        colour.b += 0.05f;
+                    }
+                    else if ((colour.r * 255) > colourRBGValues[0, 0])
+                    {
+                        colour.r -= 0.05f;
+                    }
+                    else if ((colour.g * 255) > colourRBGValues[0, 1])
+                    {
+                        colour.g -= 0.05f;
+                    }
+                    else if ((colour.b * 255) > colourRBGValues[0, 2])
+                    {
+                        colour.b -= 0.05f;
+                    }
+                    //Debug.Log((colour.r * 255) + colourRBGValues[0, 0]);
+                    //Debug.Log(colour.r * 255);
+                    //colour.r += 0.05f;
                     break;
                 case 1:
                     Debug.Log("yellow");
+                    if ((colour.r * 255) < colourRBGValues[1, 0])
+                    {
+                        colour.r += 0.05f;
+                    }
+                    if ((colour.g * 255) < colourRBGValues[1, 1])
+                    {
+                        colour.g += 0.05f;
+                    }
+                    if ((colour.b * 255) <= colourRBGValues[1, 2])
+                    {
+                        colour.b += 0.05f;
+                    }
+                    else if ((colour.r * 255) > colourRBGValues[1, 0])
+                    {
+                        colour.r -= 0.05f;
+                    }
+                    else if ((colour.g * 255) > colourRBGValues[1, 1])
+                    {
+                        colour.g -= 0.05f;
+                    }
+                    else if ((colour.b * 255) > colourRBGValues[1, 2])
+                    {
+                        colour.b -= 0.05f;
+                    }
 
                     break;
                 case 2:
@@ -97,14 +164,45 @@ public class sprayGun : MonoBehaviour
                     break;
 
             }
-
-            currentGameObject.GetComponent<Renderer>().material.color = colour;
+            */
         }
         // Debug.DrawLine(gunTransform.position, transform.TransformDirection(Vector3.forward) * 100, Color.green);
     }
 
+  void ChangeColour( int selectedColour,  Color colour)
+    {
+        Debug.Log(colour.r);
+        if ((colour.r * 255) < colourRBGValues[selectedColour, 0])
+        {
+            colour.r += 0.05f;
+        }
+        if ((colour.g * 255) < colourRBGValues[selectedColour, 1])
+        {
+            colour.g += 0.05f;
+        }
+        if ((colour.b * 255) <= colourRBGValues[selectedColour, 2])
+        {
+            colour.b += 0.05f;
+        }
+        else if ((colour.r * 255) > colourRBGValues[selectedColour, 0])
+        {
+            colour.r -= 0.05f;
+        }
+        else if ((colour.g * 255) > colourRBGValues[selectedColour, 1])
+        {
+            colour.g -= 0.05f;
+        }
+        else if ((colour.b * 255) > colourRBGValues[selectedColour, 2])
+        {
+            colour.b -= 0.05f;
+        }
+        currentGameObject.GetComponent<Renderer>().material.color = colour;
+    }
+
+
     void OnFire()
     {
+       // StartCoroutine(sprayDelay());
         rayCastingGunHit();
     }
 
