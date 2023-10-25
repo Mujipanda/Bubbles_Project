@@ -204,13 +204,9 @@ public class sprayGun : MonoBehaviour
 
     void OnFire()
     {
-       // StartCoroutine(sprayDelay());
+        // StartCoroutine(sprayDelay());
+       
 
-        if (controls.Player.Fire.IsPressed())
-        {
-            isShooting = true;
-            Debug.Log("isPressed");
-        }
     }
 
     private void OnDrawGizmos()
@@ -227,7 +223,6 @@ public class sprayGun : MonoBehaviour
             rayCastingGunHit();
         //rayCastingGunHit();
 
-
         if (controls.Player.Fire.IsPressed())
         {
             isShooting = true;
@@ -235,6 +230,7 @@ public class sprayGun : MonoBehaviour
         }
         else
             isShooting = false;
+
     }
 
     private void FixedUpdate()
