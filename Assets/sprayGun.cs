@@ -12,6 +12,7 @@ public class sprayGun : MonoBehaviour
     private Color colour;
     ControlsInputs controls;
     private int selectedColour = 0;
+    private bool isShooting = false;
    
 
     int[,] colourRBGValues = new int[5, 3]{ // [ number of rows, number colums]
@@ -29,6 +30,7 @@ public class sprayGun : MonoBehaviour
         rend = GetComponent<Renderer>();
         colour = new Color(1.0f, 1.0f, 1.0f);
         controls = new ControlsInputs();
+        controls.Enable();
 
     }
 
@@ -203,7 +205,12 @@ public class sprayGun : MonoBehaviour
     void OnFire()
     {
        // StartCoroutine(sprayDelay());
-        rayCastingGunHit();
+
+        if (controls.Player.Fire.IsPressed())
+        {
+            isShooting = true;
+            Debug.Log("isPressed");
+        }
     }
 
     private void OnDrawGizmos()
@@ -216,8 +223,18 @@ public class sprayGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (isShooting)
+            rayCastingGunHit();
         //rayCastingGunHit();
+
+
+        if (controls.Player.Fire.IsPressed())
+        {
+            isShooting = true;
+            Debug.Log("isPressed");
+        }
+        else
+            isShooting = false;
     }
 
     private void FixedUpdate()
