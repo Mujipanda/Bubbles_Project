@@ -73,7 +73,8 @@ public class sprayGun : MonoBehaviour
     {
         
         RaycastHit hit;
-        if (Physics.Raycast(gunTransform.position, cameraTransform.forward, out hit, 20))
+        int layerMask = 1 << 3;
+        if (Physics.Raycast(gunTransform.position, cameraTransform.forward, out hit, 20, layerMask))
         {
 
             //Debug.Log("hitting Object");

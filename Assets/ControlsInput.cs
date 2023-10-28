@@ -80,6 +80,15 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f6afe4b-a69a-4d4c-bc95-81891becef19"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -566,6 +575,39 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""action"": ""ColourDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de2d1233-1cda-4aff-aa40-b839409958d8"",
+                    ""path"": ""<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button13"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d9e813b-b45a-4439-834d-2cf85a6c3039"",
+                    ""path"": ""<XInputController>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a3ccd59-21ea-4691-a38e-5914ca0ba26e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -580,6 +622,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_ColourUp = m_Player.FindAction("ColourUp", throwIfNotFound: true);
         m_Player_ColourDown = m_Player.FindAction("ColourDown", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -647,6 +690,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_ColourUp;
     private readonly InputAction m_Player_ColourDown;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @ControlsInputs m_Wrapper;
@@ -657,6 +701,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @ColourUp => m_Wrapper.m_Player_ColourUp;
         public InputAction @ColourDown => m_Wrapper.m_Player_ColourDown;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -684,6 +729,9 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
             @ColourDown.started += instance.OnColourDown;
             @ColourDown.performed += instance.OnColourDown;
             @ColourDown.canceled += instance.OnColourDown;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -706,6 +754,9 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
             @ColourDown.started -= instance.OnColourDown;
             @ColourDown.performed -= instance.OnColourDown;
             @ColourDown.canceled -= instance.OnColourDown;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -731,5 +782,6 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnColourUp(InputAction.CallbackContext context);
         void OnColourDown(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

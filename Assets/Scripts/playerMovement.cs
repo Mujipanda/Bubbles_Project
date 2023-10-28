@@ -8,10 +8,11 @@ public class playerMovement : MonoBehaviour
     private Rigidbody rb;
 
     //##___ints___##
+    [Header("A mess of varibles god help me, please don't touch")]
     [SerializeField]
     private int maxSpeed;
     private int speedx;// don't touch
-
+    
 
     [SerializeField]
     [Range(1, 5)]
@@ -51,11 +52,12 @@ public class playerMovement : MonoBehaviour
     public bool allowjump = false, isFalling = false, isJumping = false, cancelJump = false;
 
     //##___GameObjects___##
+    
     public GameObject camObj;
 
 
     public Transform target;
-    public Vector3 velocity = Vector3.zero;
+    private Vector3 velocity = Vector3.zero;
 
     private void Awake()
     {
@@ -130,7 +132,7 @@ public class playerMovement : MonoBehaviour
         cancelJump = false;
         float timeElapsed = 0;
 
-        while (timeElapsed < duration && !cancelJump)
+        while (timeElapsed < duration)
         {
             
             float t = timeElapsed / duration;
@@ -138,9 +140,17 @@ public class playerMovement : MonoBehaviour
             timeElapsed += Time.deltaTime;
             jumpVec3 = new Vector3(0, Mathf.Sin(lerpedValue) / 10, 0);
             gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) / 10;
+            Debug.Log(lerpedValue);
             yield return new WaitForEndOfFrame();
+
+            if (lerpedValue > 0 && cancelJump)
+            {
+                //lerpedValue = -1;
+                timeElapsed = 1;
+
+            }
         }
-        cancelJump = false;
+       
         // isFalling = true;
         isJumping = false;
         lerpedValue = end;
@@ -188,7 +198,7 @@ public class playerMovement : MonoBehaviour
         {
             // Debug.Log("true");
 
-            //cancelJump = true;
+            cancelJump = true;
             allowjump = true;
 
             isFalling = false;
@@ -243,6 +253,7 @@ public class playerMovement : MonoBehaviour
         //rb.velocity = transVec;
 
         //rb.AddForce(transVec, ForceMode.VelocityChange);// moves the player( applys the transform to the rigidbody) 
+
         gameObject.transform.position += transVec * Time.deltaTime;
 
         camObj.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
