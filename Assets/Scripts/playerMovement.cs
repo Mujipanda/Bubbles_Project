@@ -265,9 +265,11 @@ public class playerMovement : MonoBehaviour
 
                 //rb.AddForce(transVec, ForceMode.VelocityChange);// moves the player( applys the transform to the rigidbody) 
 
-                gameObject.transform.position += transVec * Time.deltaTime;
+               // gameObject.transform.position += transVec * Time.deltaTime; //causes collision bugs 
+                rb.velocity = transVec; // does not create collision bugs
 
-                camObj.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
+                GameObject camObj1 = camObj;
+                camObj1.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
                 gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
                 camObj.transform.position = target.transform.position;// camera follow chase object
 
