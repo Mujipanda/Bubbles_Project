@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class sprayGun : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class sprayGun : MonoBehaviour
     ControlsInputs controls;
     private int selectedColour = 0;
     private bool isShooting = false;
-   
+
 
     int[,] colourRBGValues = new int[5, 3]{ // [ number of rows, number colums]
         //R    G    B
@@ -29,8 +28,8 @@ public class sprayGun : MonoBehaviour
     private void Awake()
     {
         rend = GetComponent<Renderer>();
-        colour = new Color(1.0f, 1.0f, 1.0f);
-        colour32 = new Color32(255,255, 255, 255);
+        //colour = new Color(1.0f, 1.0f, 1.0f);
+        colour32 = new Color32(255, 255, 255, 255);
 
         controls = new ControlsInputs();
         controls.Enable();
@@ -69,9 +68,14 @@ public class sprayGun : MonoBehaviour
         Debug.Log(selectedColour);
         yield return new WaitForEndOfFrame();
     }
+    IEnumerator shootingDelay()
+    {
+        rayCastingGunHit();
+        yield return new WaitForSeconds(0.05f);
+    }
     void rayCastingGunHit()
     {
-        
+
         RaycastHit hit;
         int layerMask = 1 << 3;
         if (Physics.Raycast(gunTransform.position, cameraTransform.forward, out hit, 20, layerMask))
@@ -83,129 +87,160 @@ public class sprayGun : MonoBehaviour
             colour32 = currentGameObject.GetComponent<Renderer>().material.color;
 
             ChangeColour(selectedColour, colour32);
-           /* switch (selectedColour)
-            {
-                case 0:
-                    Debug.Log("green");
-                    
-                    if ((colour.r * 255) < colourRBGValues[0, 0])
-                    {
-                        colour.r += 0.05f;
-                    }
-                    if ((colour.g * 255) < colourRBGValues[0,1])
-                    {
-                        colour.g += 0.05f;
-                    }
-                    if((colour.b * 255) <= colourRBGValues[0,2])
-                    {
-                        colour.b += 0.05f;
-                    }
-                    else if ((colour.r * 255) > colourRBGValues[0, 0])
-                    {
-                        colour.r -= 0.05f;
-                    }
-                    else if ((colour.g * 255) > colourRBGValues[0, 1])
-                    {
-                        colour.g -= 0.05f;
-                    }
-                    else if ((colour.b * 255) > colourRBGValues[0, 2])
-                    {
-                        colour.b -= 0.05f;
-                    }
-                    //Debug.Log((colour.r * 255) + colourRBGValues[0, 0]);
-                    //Debug.Log(colour.r * 255);
-                    //colour.r += 0.05f;
-                    break;
-                case 1:
-                    Debug.Log("yellow");
-                    if ((colour.r * 255) < colourRBGValues[1, 0])
-                    {
-                        colour.r += 0.05f;
-                    }
-                    if ((colour.g * 255) < colourRBGValues[1, 1])
-                    {
-                        colour.g += 0.05f;
-                    }
-                    if ((colour.b * 255) <= colourRBGValues[1, 2])
-                    {
-                        colour.b += 0.05f;
-                    }
-                    else if ((colour.r * 255) > colourRBGValues[1, 0])
-                    {
-                        colour.r -= 0.05f;
-                    }
-                    else if ((colour.g * 255) > colourRBGValues[1, 1])
-                    {
-                        colour.g -= 0.05f;
-                    }
-                    else if ((colour.b * 255) > colourRBGValues[1, 2])
-                    {
-                        colour.b -= 0.05f;
-                    }
 
-                    break;
-                case 2:
-                    //Debug.Log("pink");
-                    Debug.Log(colour.g + " G");
-                    Debug.Log(colour.r + " R");
-                    Debug.Log(colour.b + " B");
-                    if (colour.g > 0)
-                    {
-                        colour.g -= 0.1f;
-                        colour.r += 0.1f;
-                        colour.b += 0.1f;
-                    }
-                    break;
-                case 3:
-                    //.Log("blue");
-                    if (colour.r > 0)
-                    {
-                        colour.g += 0.1f;
-                        colour.r -= 0.1f;
-                        colour.b += 0.1f;
+            /* switch (selectedColour)
+             {
+                 case 0:
+                     Debug.Log("green");
 
-                    }
-                    break;
-                case 4:
-                    Debug.Log("orange");
-                    break;
+                     if ((colour.r * 255) < colourRBGValues[0, 0])
+                     {
+                         colour.r += 0.05f;
+                     }
+                     if ((colour.g * 255) < colourRBGValues[0,1])
+                     {
+                         colour.g += 0.05f;
+                     }
+                     if((colour.b * 255) <= colourRBGValues[0,2])
+                     {
+                         colour.b += 0.05f;
+                     }
+                     else if ((colour.r * 255) > colourRBGValues[0, 0])
+                     {
+                         colour.r -= 0.05f;
+                     }
+                     else if ((colour.g * 255) > colourRBGValues[0, 1])
+                     {
+                         colour.g -= 0.05f;
+                     }
+                     else if ((colour.b * 255) > colourRBGValues[0, 2])
+                     {
+                         colour.b -= 0.05f;
+                     }
+                     //Debug.Log((colour.r * 255) + colourRBGValues[0, 0]);
+                     //Debug.Log(colour.r * 255);
+                     //colour.r += 0.05f;
+                     break;
+                 case 1:
+                     Debug.Log("yellow");
+                     if ((colour.r * 255) < colourRBGValues[1, 0])
+                     {
+                         colour.r += 0.05f;
+                     }
+                     if ((colour.g * 255) < colourRBGValues[1, 1])
+                     {
+                         colour.g += 0.05f;
+                     }
+                     if ((colour.b * 255) <= colourRBGValues[1, 2])
+                     {
+                         colour.b += 0.05f;
+                     }
+                     else if ((colour.r * 255) > colourRBGValues[1, 0])
+                     {
+                         colour.r -= 0.05f;
+                     }
+                     else if ((colour.g * 255) > colourRBGValues[1, 1])
+                     {
+                         colour.g -= 0.05f;
+                     }
+                     else if ((colour.b * 255) > colourRBGValues[1, 2])
+                     {
+                         colour.b -= 0.05f;
+                     }
 
-            }
-            */
+                     break;
+                 case 2:
+                     //Debug.Log("pink");
+                     Debug.Log(colour.g + " G");
+                     Debug.Log(colour.r + " R");
+                     Debug.Log(colour.b + " B");
+                     if (colour.g > 0)
+                     {
+                         colour.g -= 0.1f;
+                         colour.r += 0.1f;
+                         colour.b += 0.1f;
+                     }
+                     break;
+                 case 3:
+                     //.Log("blue");
+                     if (colour.r > 0)
+                     {
+                         colour.g += 0.1f;
+                         colour.r -= 0.1f;
+                         colour.b += 0.1f;
+
+                     }
+                     break;
+                 case 4:
+                     Debug.Log("orange");
+                     break;
+
+             }
+             */
         }
         // Debug.DrawLine(gunTransform.position, transform.TransformDirection(Vector3.forward) * 100, Color.green);
     }
 
-  void ChangeColour( int selectedColour,  Color colour)
+    void ChangeColour(int selectedColour, Color32 colour)
     {
         Debug.Log(colour.r);
-        if ((colour.r * 255) < colourRBGValues[selectedColour, 0])
-        {
-            colour.r += 0.05f;
-        }
-        if ((colour.g * 255) < colourRBGValues[selectedColour, 1])
-        {
-            colour.g += 0.05f;
-        }
-        if ((colour.b * 255) <= colourRBGValues[selectedColour, 2])
-        {
-            colour.b += 0.05f;
-        }
-        else if ((colour.r * 255) > colourRBGValues[selectedColour, 0])
-        {
-            colour.r -= 0.05f;
-        }
-        else if ((colour.g * 255) > colourRBGValues[selectedColour, 1])
-        {
-            colour.g -= 0.05f;
-        }
-        else if ((colour.b * 255) > colourRBGValues[selectedColour, 2])
-        {
-            colour.b -= 0.05f;
-        }
+        
+        colour.r = red(selectedColour, colour).r;
+        colour.g = green(selectedColour, colour).g;
+        colour.b = blue(selectedColour, colour).b;
+        /// green(selectedColour);
+
         currentGameObject.GetComponent<Renderer>().material.color = colour;
     }
+    void red2(int selectedColour, Color32 colour)
+    {
+        if ((colour.r) < colourRBGValues[selectedColour, 0])
+        {
+            colour.r += 1;
+        }
+        else if ((colour.r) > colourRBGValues[selectedColour, 0])
+        {
+            colour.r -= 1;
+        }
+    }
 
+    Color32 red(int selectedColour, Color32 colour)
+    {
+        if ((colour.r) < colourRBGValues[selectedColour, 0])
+        {
+            colour.r += 1;
+        }
+        else if ((colour.r) > colourRBGValues[selectedColour, 0])
+        {
+            colour.r -= 1;
+        }
+        return colour;
+    }
+
+    Color32 green(int selectedColour, Color32 colour)
+    {
+        if ((colour.g) < colourRBGValues[selectedColour, 1])
+        {
+            colour.g += 1;
+        }
+        else if ((colour.g) > colourRBGValues[selectedColour, 1])
+        {
+            colour.g -= 1;
+        }
+        return colour;
+    }
+    Color32 blue(int selectedColour, Color32 colour)
+    {
+        if ((colour.b) < colourRBGValues[selectedColour, 2])
+        {
+            colour.b += 1;
+        }
+        else if ((colour.g) > colourRBGValues[selectedColour, 2])
+        {
+            colour.b -= 1;
+        }
+        return colour;
+    }
 
     void OnFire()
     {
@@ -223,13 +258,14 @@ public class sprayGun : MonoBehaviour
     void Update()
     {
         if (isShooting)
-            rayCastingGunHit();
+            StartCoroutine(shootingDelay());
+
         //rayCastingGunHit();
 
         if (controls.Player.Fire.IsPressed())
         {
             isShooting = true;
-            Debug.Log("isPressed");
+            //Debug.Log("isPressed");
         }
         else
             isShooting = false;
@@ -247,6 +283,6 @@ public class sprayGun : MonoBehaviour
         //gunTransform.position = chaseTransform.position;
         gunTransform.position = gunPos.position;
         gunTransform.rotation = gunPos.rotation;
-        
+
     }
 }
