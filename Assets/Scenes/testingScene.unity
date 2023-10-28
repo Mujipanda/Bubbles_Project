@@ -6215,7 +6215,6 @@ GameObject:
   - component: {fileID: 1541669848}
   - component: {fileID: 1541669852}
   - component: {fileID: 1541669853}
-  - component: {fileID: 1541669854}
   m_Layer: 0
   m_Name: 'player '
   m_TagString: Untagged
@@ -6300,6 +6299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906e27c725492d0428c3a0fb552cf6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseScript: {fileID: 1541669853}
   maxSpeed: 10
   followDelay: 5
   joyStickDeadZone: 0.502
@@ -6415,20 +6415,8 @@ MonoBehaviour:
   chaseTransform: {fileID: 1981184304}
   cameraTransform: {fileID: 976633391}
   gunPos: {fileID: 1808492241}
+  pauseScript: {fileID: 1541669853}
 --- !u!114 &1541669853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541669842}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ebb9dfcfc0c2b4eb292c7c7081e891, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PauseUI: {fileID: 1256212848}
---- !u!114 &1541669854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6441,6 +6429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseUI: {fileID: 1256212848}
+  gamePaused: 0
 --- !u!1 &1581226022
 GameObject:
   m_ObjectHideFlags: 0

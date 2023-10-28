@@ -13,6 +13,7 @@ public class sprayGun : MonoBehaviour
     ControlsInputs controls;
     private int selectedColour = 0;
     private bool isShooting = false;
+    public PauseMenu pauseScript;
 
 
     int[,] colourRBGValues = new int[5, 3]{ // [ number of rows, number colums]
@@ -34,6 +35,7 @@ public class sprayGun : MonoBehaviour
         controls = new ControlsInputs();
         controls.Enable();
 
+        pauseScript = GetComponent<PauseMenu>();
 
     }
 
@@ -54,7 +56,9 @@ public class sprayGun : MonoBehaviour
 
     void OnColourDown()
     {
+
         StartCoroutine(switchDown());
+
     }
 
     IEnumerator switchDown()
@@ -183,8 +187,8 @@ public class sprayGun : MonoBehaviour
 
     void ChangeColour(int selectedColour, Color32 colour)
     {
-        Debug.Log(colour.r);
-        
+        //Debug.Log(colour.r);
+
         colour.r = red(selectedColour, colour).r;
         colour.g = green(selectedColour, colour).g;
         colour.b = blue(selectedColour, colour).b;
@@ -257,18 +261,24 @@ public class sprayGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isShooting)
-            StartCoroutine(shootingDelay());
-
-        //rayCastingGunHit();
-
-        if (controls.Player.Fire.IsPressed())
+        switch (pauseScript.gamePaused)
         {
-            isShooting = true;
-            //Debug.Log("isPressed");
+            case false:
+                if (isShooting)
+                    StartCoroutine(shootingDelay());
+
+                //rayCastingGunHit();
+
+                if (controls.Player.Fire.IsPressed())
+                {
+                    isShooting = true;
+                    //Debug.Log("isPressed");
+                }
+                else
+                    isShooting = false;
+                break;
         }
-        else
-            isShooting = false;
+
 
     }
 

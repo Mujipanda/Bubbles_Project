@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class playerMovement : MonoBehaviour
 {
+    public PauseMenu pauseScript;
     private Rigidbody rb;
 
     //##___ints___##
@@ -12,7 +13,7 @@ public class playerMovement : MonoBehaviour
     [SerializeField]
     private int maxSpeed;
     private int speedx;// don't touch
-    
+
 
     [SerializeField]
     [Range(1, 5)]
@@ -52,7 +53,7 @@ public class playerMovement : MonoBehaviour
     public bool allowjump = false, isFalling = false, isJumping = false, cancelJump = false;
 
     //##___GameObjects___##
-    
+
     public GameObject camObj;
 
 
@@ -63,6 +64,7 @@ public class playerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         Application.targetFrameRate = 60;
+        pauseScript = GetComponent<PauseMenu>();
     }
 
     void OnMovement(InputValue direction)
@@ -134,13 +136,14 @@ public class playerMovement : MonoBehaviour
 
         while (timeElapsed < duration)
         {
-            
+
             float t = timeElapsed / duration;
             lerpedValue = Mathf.Lerp(start, end, t);
             timeElapsed += Time.deltaTime;
             jumpVec3 = new Vector3(0, Mathf.Sin(lerpedValue) / 10, 0);
-            gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) / 10;
-            Debug.Log(lerpedValue);
+            if (!pauseScript.gamePaused)
+                gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) / 10;
+            //Debug.Log(lerpedValue);
             yield return new WaitForEndOfFrame();
 
             if (lerpedValue > 0 && cancelJump)
@@ -150,7 +153,7 @@ public class playerMovement : MonoBehaviour
 
             }
         }
-       
+
         // isFalling = true;
         isJumping = false;
         lerpedValue = end;
@@ -239,8 +242,13 @@ public class playerMovement : MonoBehaviour
 
     private void Update()// works every single frame
     {
-        //movementMath();// calculates SpeedX
-        rayCasting();
+        switch (pauseScript.gamePaused)
+        {
+            case false:
+                rayCasting();
+                break;
+        }
+       
 
 
         //SinGraphJump();
@@ -248,22 +256,31 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate() // runs incync with each frame/ runs 50 calls a second / 25fps runs twice per frame and so on
     {
-        var transVec = transform.rotation * (vec3 * 10); // turns vec into a transform( transforms are local space) Replace 10 with speedx to use movementMath method
-        //Debug.Log(vec3);
-        //rb.velocity = transVec;
+        switch (pauseScript.gamePaused)
+        {
+            case false:
+                var transVec = transform.rotation * (vec3 * 10); // turns vec into a transform( transforms are local space) Replace 10 with speedx to use movementMath method
+                                                                 //Debug.Log(vec3);
+                                                                 //rb.velocity = transVec;
 
-        //rb.AddForce(transVec, ForceMode.VelocityChange);// moves the player( applys the transform to the rigidbody) 
+                //rb.AddForce(transVec, ForceMode.VelocityChange);// moves the player( applys the transform to the rigidbody) 
 
-        gameObject.transform.position += transVec * Time.deltaTime;
+                gameObject.transform.position += transVec * Time.deltaTime;
 
-        camObj.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
-        gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
-        camObj.transform.position = target.transform.position;// camera follow chase object
+                camObj.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
+                gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
+                camObj.transform.position = target.transform.position;// camera follow chase object
 
-        target.transform.position = Vector3.SmoothDamp(target.transform.position, gameObject.transform.position, ref velocity, followDelay * Time.deltaTime);// creates a damped interpolrant between the actual player and what the camerea follows
-        target.transform.rotation = camObj.transform.rotation;
+                target.transform.position = Vector3.SmoothDamp(target.transform.position, gameObject.transform.position, ref velocity, followDelay * Time.deltaTime);// creates a damped interpolrant between the actual player and what the camerea follows
+                target.transform.rotation = camObj.transform.rotation;
+
+                fixedGravity();
+                break;
+        }
+
         
-        fixedGravity();
+
+
 
     }
 
