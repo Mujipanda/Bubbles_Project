@@ -10,6 +10,7 @@ public class sprayGun : MonoBehaviour
     private Renderer rend;
     private Vector3 gizmoPoint = Vector3.zero;
     private Color colour;
+    private Color32 colour32;
     ControlsInputs controls;
     private int selectedColour = 0;
     private bool isShooting = false;
@@ -29,8 +30,11 @@ public class sprayGun : MonoBehaviour
     {
         rend = GetComponent<Renderer>();
         colour = new Color(1.0f, 1.0f, 1.0f);
+        colour32 = new Color32(255,255, 255, 255);
+
         controls = new ControlsInputs();
         controls.Enable();
+
 
     }
 
@@ -75,9 +79,9 @@ public class sprayGun : MonoBehaviour
             //Debug.Log("hitting Object");
             gizmoPoint = hit.point;
             currentGameObject = hit.transform.gameObject;
-            colour = currentGameObject.GetComponent<Renderer>().material.color;
+            colour32 = currentGameObject.GetComponent<Renderer>().material.color;
 
-            ChangeColour(selectedColour, colour);
+            ChangeColour(selectedColour, colour32);
            /* switch (selectedColour)
             {
                 case 0:
@@ -205,8 +209,6 @@ public class sprayGun : MonoBehaviour
     void OnFire()
     {
         // StartCoroutine(sprayDelay());
-       
-
     }
 
     private void OnDrawGizmos()
