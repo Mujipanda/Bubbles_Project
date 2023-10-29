@@ -81,7 +81,6 @@ public class pickUp : MonoBehaviour
                 //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, PickupRange))
                 if (Physics.Raycast(ray, out hit, PickupRange, layerMask)) // removed range 
                 {
-                    Debug.DrawLine(ray.origin, ray.direction * PickupRange, Color.cyan, layerMask);
                     PickupObject(hit.transform.gameObject);
                 }
             }
