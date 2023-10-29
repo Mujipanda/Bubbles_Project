@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.UIElements;
 
 public class pickUp : MonoBehaviour
 {
@@ -54,7 +54,10 @@ public class pickUp : MonoBehaviour
         }
     }*/
 
-
+    private Ray RayPoint()
+    {
+        return Camera.main.ViewportPointToRay(Vector3.one * 0.5f);
+    }
 
     private void FixedUpdate()
     {
@@ -67,27 +70,33 @@ public class pickUp : MonoBehaviour
 
         if (isPressingButton)
         {
-
+           
             if (heldobject == null)
             {
                 RaycastHit hit;
-                //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, PickupRange))
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit)) // removed range 
-                {
-                    
-                    PickupObject(hit.transform.gameObject);
-                    Debug.DrawLine(transform.position, hit.transform.position, Color.red);// does not work correctly
-                    //Debug.Log(hit.distance);// ignore this
+                Ray ray = RayPoint();
+                int layerMask = 1 << 3;
+                
 
+                //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, PickupRange))
+                if (Physics.Raycast(ray, out hit, PickupRange, layerMask)) // removed range 
+                {
+                    Debug.DrawLine(ray.origin, ray.direction * PickupRange, Color.cyan, layerMask);
+                    PickupObject(hit.transform.gameObject);
                 }
-                //else
-                //DropObject();
             }
-            //if (heldobject != null)
-            //MoveObject();
+            
         }
+        else if (heldobject != null) 
+            DropObject();
+
+        if (heldobject != null)
+            MoveObject();
+
 
     }
+
+    
     void MoveObject()
     {
         if (Vector3.Distance(heldobject.transform.position, holdzone.position) < 0.1f)

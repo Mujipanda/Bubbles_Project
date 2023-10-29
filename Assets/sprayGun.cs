@@ -90,10 +90,17 @@ public class sprayGun : MonoBehaviour
             gizmoPoint = hit.point;
             currentGameObject = hit.transform.gameObject;
             colour32 = currentGameObject.GetComponent<Renderer>().material.color;
-            rb = currentGameObject.GetComponent<Rigidbody>();
-            ChangeColour(selectedColour, colour32);
-            increaseMass();
-            increaseScale(currentGameObject);
+            if (currentGameObject.GetComponent<Rigidbody>())
+            {
+                rb = currentGameObject.GetComponent<Rigidbody>();
+                increaseMass();
+                increaseScale(currentGameObject);
+                ChangeColour(selectedColour, colour32);
+            }
+
+            
+            
+            
 
         }
         // Debug.DrawLine(gunTransform.position, transform.TransformDirection(Vector3.forward) * 100, Color.green);

@@ -98,6 +98,15 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""7baa93ff-c260-43bd-8072-98426c7622f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -650,6 +659,28 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1374af6c-4be0-44bd-9123-227a9641e4a6"",
+                    ""path"": ""<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee81475b-5846-4e5b-b02b-8d61e83d4fd8"",
+                    ""path"": ""<Joystick>/stick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -666,6 +697,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         m_Player_ColourDown = m_Player.FindAction("ColourDown", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
+        m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -735,6 +767,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ColourDown;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_Pickup;
+    private readonly InputAction m_Player_Rotate;
     public struct PlayerActions
     {
         private @ControlsInputs m_Wrapper;
@@ -747,6 +780,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         public InputAction @ColourDown => m_Wrapper.m_Player_ColourDown;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
+        public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -780,6 +814,9 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
             @Pickup.started += instance.OnPickup;
             @Pickup.performed += instance.OnPickup;
             @Pickup.canceled += instance.OnPickup;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -808,6 +845,9 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
             @Pickup.started -= instance.OnPickup;
             @Pickup.performed -= instance.OnPickup;
             @Pickup.canceled -= instance.OnPickup;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -835,5 +875,6 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         void OnColourDown(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
 }
