@@ -58,12 +58,13 @@ public class pickUp : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (controls.Player.Pickup.IsPressed())
+        if (controls.Player.Pickup.IsPressed())// simulates holding the button // keymaped to E on keyboard and B on controler
         {
             isPressingButton = true;
         }
         else
             isPressingButton = false;
+
         if (isPressingButton)
         {
 
@@ -71,12 +72,12 @@ public class pickUp : MonoBehaviour
             {
                 RaycastHit hit;
                 //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, PickupRange))
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit))
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit)) // removed range 
                 {
                     
                     PickupObject(hit.transform.gameObject);
-                    Debug.DrawLine(transform.position, hit.transform.position, Color.red);
-                    Debug.Log(hit.distance);
+                    Debug.DrawLine(transform.position, hit.transform.position, Color.red);// does not work correctly
+                    //Debug.Log(hit.distance);// ignore this
 
                 }
                 //else
