@@ -63,7 +63,7 @@ public class playerMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60; // changing fps changes jump hight
         pauseScript = GetComponent<PauseMenu>();
     }
 
@@ -279,10 +279,6 @@ public class playerMovement : MonoBehaviour
                 fixedGravity();
                 break;
         }
-
-        
-
-
 
     }
 

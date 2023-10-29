@@ -89,6 +89,15 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pickup"",
+                    ""type"": ""Button"",
+                    ""id"": ""366c2ea5-95eb-480b-abd1-4c585238a9a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -608,6 +617,39 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4cf4774-0683-47f7-9045-34842f2646e9"",
+                    ""path"": ""<XInputController>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9f38418-e367-4337-ba89-ffaa0e793a0a"",
+                    ""path"": ""<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7379d8c-6694-4b08-9802-84f86e4ba184"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -623,6 +665,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         m_Player_ColourUp = m_Player.FindAction("ColourUp", throwIfNotFound: true);
         m_Player_ColourDown = m_Player.FindAction("ColourDown", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -691,6 +734,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ColourUp;
     private readonly InputAction m_Player_ColourDown;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Pickup;
     public struct PlayerActions
     {
         private @ControlsInputs m_Wrapper;
@@ -702,6 +746,7 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         public InputAction @ColourUp => m_Wrapper.m_Player_ColourUp;
         public InputAction @ColourDown => m_Wrapper.m_Player_ColourDown;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -732,6 +777,9 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Pickup.started += instance.OnPickup;
+            @Pickup.performed += instance.OnPickup;
+            @Pickup.canceled += instance.OnPickup;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -757,6 +805,9 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Pickup.started -= instance.OnPickup;
+            @Pickup.performed -= instance.OnPickup;
+            @Pickup.canceled -= instance.OnPickup;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -783,5 +834,6 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         void OnColourUp(InputAction.CallbackContext context);
         void OnColourDown(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnPickup(InputAction.CallbackContext context);
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.Profiling;
 public class sprayGun : MonoBehaviour
 {
     [SerializeField]
@@ -14,13 +14,13 @@ public class sprayGun : MonoBehaviour
     private int selectedColour = 0;
     private bool isShooting = false;
     public PauseMenu pauseScript;
-
+    private Rigidbody rb;
 
     int[,] colourRBGValues = new int[5, 3]{ // [ number of rows, number colums]
         //R    G    B
         { 153, 255, 153 },// green
         { 255, 255, 153 },// yellow
-        { 255, 153, 255 },// pink
+        { 255, 153, 230 },// pink
         { 153, 255, 255 },// blue
         { 255, 204, 102 },// orange
     };
@@ -36,7 +36,6 @@ public class sprayGun : MonoBehaviour
         controls.Enable();
 
         pauseScript = GetComponent<PauseMenu>();
-
     }
 
     void OnColourUp()
@@ -50,7 +49,7 @@ public class sprayGun : MonoBehaviour
         else
             selectedColour += 1;
 
-        Debug.Log(selectedColour);
+        // Debug.Log(selectedColour);
         yield return new WaitForEndOfFrame();
     }
 
@@ -69,13 +68,15 @@ public class sprayGun : MonoBehaviour
         else
             selectedColour -= 1;
 
-        Debug.Log(selectedColour);
+        //Debug.Log(selectedColour);
         yield return new WaitForEndOfFrame();
     }
     IEnumerator shootingDelay()
     {
+        Profiler.BeginSample("Shooting gun");
         rayCastingGunHit();
-        yield return new WaitForSeconds(0.05f);
+        Profiler.EndSample();
+        yield return new WaitForSeconds(0.01f);
     }
     void rayCastingGunHit()
     {
@@ -89,98 +90,11 @@ public class sprayGun : MonoBehaviour
             gizmoPoint = hit.point;
             currentGameObject = hit.transform.gameObject;
             colour32 = currentGameObject.GetComponent<Renderer>().material.color;
-
+            rb = currentGameObject.GetComponent<Rigidbody>();
             ChangeColour(selectedColour, colour32);
+            increaseMass();
+            increaseScale(currentGameObject);
 
-            /* switch (selectedColour)
-             {
-                 case 0:
-                     Debug.Log("green");
-
-                     if ((colour.r * 255) < colourRBGValues[0, 0])
-                     {
-                         colour.r += 0.05f;
-                     }
-                     if ((colour.g * 255) < colourRBGValues[0,1])
-                     {
-                         colour.g += 0.05f;
-                     }
-                     if((colour.b * 255) <= colourRBGValues[0,2])
-                     {
-                         colour.b += 0.05f;
-                     }
-                     else if ((colour.r * 255) > colourRBGValues[0, 0])
-                     {
-                         colour.r -= 0.05f;
-                     }
-                     else if ((colour.g * 255) > colourRBGValues[0, 1])
-                     {
-                         colour.g -= 0.05f;
-                     }
-                     else if ((colour.b * 255) > colourRBGValues[0, 2])
-                     {
-                         colour.b -= 0.05f;
-                     }
-                     //Debug.Log((colour.r * 255) + colourRBGValues[0, 0]);
-                     //Debug.Log(colour.r * 255);
-                     //colour.r += 0.05f;
-                     break;
-                 case 1:
-                     Debug.Log("yellow");
-                     if ((colour.r * 255) < colourRBGValues[1, 0])
-                     {
-                         colour.r += 0.05f;
-                     }
-                     if ((colour.g * 255) < colourRBGValues[1, 1])
-                     {
-                         colour.g += 0.05f;
-                     }
-                     if ((colour.b * 255) <= colourRBGValues[1, 2])
-                     {
-                         colour.b += 0.05f;
-                     }
-                     else if ((colour.r * 255) > colourRBGValues[1, 0])
-                     {
-                         colour.r -= 0.05f;
-                     }
-                     else if ((colour.g * 255) > colourRBGValues[1, 1])
-                     {
-                         colour.g -= 0.05f;
-                     }
-                     else if ((colour.b * 255) > colourRBGValues[1, 2])
-                     {
-                         colour.b -= 0.05f;
-                     }
-
-                     break;
-                 case 2:
-                     //Debug.Log("pink");
-                     Debug.Log(colour.g + " G");
-                     Debug.Log(colour.r + " R");
-                     Debug.Log(colour.b + " B");
-                     if (colour.g > 0)
-                     {
-                         colour.g -= 0.1f;
-                         colour.r += 0.1f;
-                         colour.b += 0.1f;
-                     }
-                     break;
-                 case 3:
-                     //.Log("blue");
-                     if (colour.r > 0)
-                     {
-                         colour.g += 0.1f;
-                         colour.r -= 0.1f;
-                         colour.b += 0.1f;
-
-                     }
-                     break;
-                 case 4:
-                     Debug.Log("orange");
-                     break;
-
-             }
-             */
         }
         // Debug.DrawLine(gunTransform.position, transform.TransformDirection(Vector3.forward) * 100, Color.green);
     }
@@ -246,18 +160,55 @@ public class sprayGun : MonoBehaviour
         return colour;
     }
 
-    void OnFire()
+    void increaseMass()
     {
-        // StartCoroutine(sprayDelay());
+        switch (selectedColour)
+        {
+            case 0:
+                StartCoroutine(MassUp());
+                
+                rb.useGravity = true;
+                break;
+
+            case 1:
+                if (rb.mass > 1)
+                {
+                    StartCoroutine(MassDown());
+                   
+                }
+                else if (rb.mass < 1)
+                    rb.useGravity = false;
+                break;
+        }
+
     }
 
-    private void OnDrawGizmos()
+    IEnumerator MassUp()
     {
-
-        Gizmos.color = Color.black;
-        // Gizmos.DrawWireSphere(gizmoPoint, radius: 0.2f);
-        Gizmos.DrawSphere(gizmoPoint, radius: 0.1f);
+        rb.mass += 1;
+        yield return new WaitForSeconds(0.01f);
     }
+    IEnumerator MassDown()
+    {
+        rb.mass -= 1;
+        yield return new WaitForSeconds(0.01f);
+    }
+
+    void increaseScale(GameObject currentGameObject)
+    {
+        switch (selectedColour)
+        {
+            case 2:
+                currentGameObject.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+                break;
+
+            case 3:
+                currentGameObject.transform.localScale += new Vector3(-0.01f, -0.01f, -0.01f);
+                break;
+
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -284,15 +235,16 @@ public class sprayGun : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //gunTransform.localEulerAngles = new Vector3(0, cameraTransform.rotation.y, cameraTransform.rotation.y);
-        //gunTransform.transform.position = new Vector3(chaseTransform.transform.position.x, chaseTransform.transform.position.y - 0.3f, chaseTransform.transform.position.z + 0.5f);
-        //gunTransform.position = chaseTransform.position;
-        //gunTransform.position = new Vector3(chaseTransform.position.x, chaseTransform.position.y, chaseTransform.position.z);
-        //gunTransform.position = new Vector3(chaseTransform.position.x, chaseTransform.position.y, chaseTransform.forward.z + 0.5f);
-        //gunTransform.rotation = chaseTransform.rotation;
-        //gunTransform.position = chaseTransform.position;
         gunTransform.position = gunPos.position;
         gunTransform.rotation = gunPos.rotation;
 
+    }
+
+    private void OnDrawGizmos()
+    {
+
+        Gizmos.color = Color.black;
+        // Gizmos.DrawWireSphere(gizmoPoint, radius: 0.2f);
+        Gizmos.DrawSphere(gizmoPoint, radius: 0.1f);
     }
 }
