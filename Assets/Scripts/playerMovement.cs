@@ -14,7 +14,6 @@ public class playerMovement : MonoBehaviour
     private int maxSpeed;
     private int speedx;// don't touch
 
-
     [SerializeField]
     [Range(1, 5)]
     private int followDelay;
@@ -44,8 +43,11 @@ public class playerMovement : MonoBehaviour
     [SerializeField]
     private float jumpSpeed;
     [SerializeField]
-    private float sinX, sinY, lerpedValue, duration;// redundant 
+    private float sinX, sinY, lerpedValue2;// redundant 
 
+    private float duration = 1.0f , lerpedValue, durationJumpPad = 1.0f;
+
+    private bool boostJumpIsActive = false;
     //private float timeElapsed = 0;
 
     //##___bools___##
@@ -140,7 +142,7 @@ public class playerMovement : MonoBehaviour
             float t = timeElapsed / duration;
             lerpedValue = Mathf.Lerp(start, end, t);
             timeElapsed += Time.deltaTime;
-            jumpVec3 = new Vector3(0, Mathf.Sin(lerpedValue) / 10, 0);
+            //jumpVec3 = new Vector3(0, Mathf.Sin(lerpedValue) / 10, 0);
             if (!pauseScript.gamePaused)
                 gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) / 10;
             //Debug.Log(lerpedValue);
@@ -158,6 +160,48 @@ public class playerMovement : MonoBehaviour
         isJumping = false;
         lerpedValue = end;
     }
+
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "BoostPad" && boostJumpIsActive)
+        {
+            Debug.Log("hit boost pad ");
+            StartCoroutine(boostPadJump(-1, 1));
+        }
+        else
+            boostJumpIsActive = true;
+    }
+
+
+    IEnumerator boostPadJump(float start, float end)
+    {
+        boostJumpIsActive = false;
+        float timeElapsed = 0;
+        while (timeElapsed < durationJumpPad)
+        {
+            
+            float t = timeElapsed / durationJumpPad;
+            lerpedValue2 = Mathf.Lerp(start, end, t);
+            Debug.Log(lerpedValue2 + " lerpedValue2"); ;
+            timeElapsed += Time.deltaTime;
+            Debug.Log(timeElapsed + " timeElapsed");
+            // jumpVec3 = new Vector3(0, Mathf.Sin(lerpedValue) / 10, 0);
+            //  if (!pauseScript.gamePaused)
+            //    gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) /4;
+
+            /* if (lerpedValue2 > 0 && cancelJump)
+             {
+                 //lerpedValue = -1;
+                 timeElapsed = 1;
+
+             }*/
+        }
+        lerpedValue = end;
+
+        yield return new WaitForEndOfFrame();
+    }
+
 
     void SinGraphJump()
     {
@@ -187,10 +231,12 @@ public class playerMovement : MonoBehaviour
         switch (isFalling)// makes sure the player is just about hovering over the ground to avoid friction/ collision with the group
         {
             case true:
-                gameObject.transform.position += -Vector3.up * 0.1f;// constant gravity downwards
+                gameObject.transform.position += -Vector3.up * 0.25f;// constant gravity downwards
                 break;
         }
     }
+
+
 
     void rayCasting()
     {

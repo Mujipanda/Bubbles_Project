@@ -22,7 +22,8 @@ public class sprayGun : MonoBehaviour
         { 255, 255, 153 },// yellow
         { 255, 153, 230 },// pink
         { 153, 255, 255 },// blue
-        { 255, 204, 102 },// orange
+        { 255, 165, 50 },// orange
+        // no value shall be 0 or colours will 
     };
 
 
@@ -97,11 +98,6 @@ public class sprayGun : MonoBehaviour
                 increaseScale(currentGameObject);
                 ChangeColour(selectedColour, colour32);
             }
-
-            
-            
-            
-
         }
         // Debug.DrawLine(gunTransform.position, transform.TransformDirection(Vector3.forward) * 100, Color.green);
     }
