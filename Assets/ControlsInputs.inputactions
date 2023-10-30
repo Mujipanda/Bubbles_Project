@@ -651,6 +651,28 @@
                 },
                 {
                     "name": "",
+                    "id": "a2a4af9f-231f-4975-9500-1115c5e64eae",
+                    "path": "<XInputController>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26c11e6f-630d-4157-aad3-77d384449721",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "ee81475b-5846-4e5b-b02b-8d61e83d4fd8",
                     "path": "<Joystick>/stick/down",
                     "interactions": "",
