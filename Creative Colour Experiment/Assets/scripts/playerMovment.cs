@@ -305,7 +305,7 @@ public class playerMovement : MonoBehaviour
         switch (pauseScript.gamePaused)
         {
             case false:
-                var transVec = transform.rotation * (vec3 * 10); // turns vec into a transform( transforms are local space) Replace 10 with speedx to use movementMath method
+                var transVec = transform.rotation * (vec3 * maxSpeed); // turns vec into a transform( transforms are local space) Replace 10 with speedx to use movementMath method
                                                                  //Debug.Log(vec3);
                                                                  //rb.velocity = transVec;
 
@@ -317,10 +317,11 @@ public class playerMovement : MonoBehaviour
                 GameObject camObj1 = camObj;
                 camObj1.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
                 gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
-                camObj.transform.position = target.transform.position;// camera follow chase object
+               
 
                 target.transform.position = Vector3.SmoothDamp(target.transform.position, gameObject.transform.position, ref velocity, followDelay * Time.deltaTime);// creates a damped interpolrant between the actual player and what the camerea follows
-                target.transform.rotation = camObj.transform.rotation;
+                target.transform.rotation = camObj.transform.rotation;// tests chase objects rotation to the camera 
+                camObj.transform.position = target.transform.position;// camera follow chase object
 
                 fixedGravity();
                 break;
