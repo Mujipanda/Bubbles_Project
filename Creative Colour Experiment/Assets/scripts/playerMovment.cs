@@ -5,59 +5,60 @@ using UnityEngine.InputSystem;
 
 public class playerMovement : MonoBehaviour
 {
-    public PauseMenu pauseScript;
+
     private Rigidbody rb;
 
     //##___ints___##
-    [Header("A mess of varibles god help me, please don't touch")]
+    [Header("Movement Vars")]
     [SerializeField]
     private int maxSpeed;
-    private int speedx;// don't touch
+    // private int speedx;// don't touch
 
     [SerializeField]
-    [Range(1, 5)]
-    private int followDelay;
+    [Range(1, 10)]
+    private int followDelay, camFollowDelay;
     //##___Vectors___##
-    private Vector3 vec3, lookVec, jumpVec3;
+    private Vector3 vec3, lookVec;
 
     //##___floats
-    [SerializeField]
-    [Range(0, 1)] private float joyStickDeadZone;// recomended no more than 50%
+    //[SerializeField]
+    // [Range(0, 1)] private float joyStickDeadZone;// recomended no more than 50%
 
-    [SerializeField]
-    [Range(0.0f, 0.1f)]
-    private float acceleration; // of seconds / less is faster
+    // [SerializeField]
+    //  [Range(0.0f, 0.1f)]
+    // private float acceleration; // of seconds / less is faster
 
     [SerializeField]
     [Range(1.0f, 5.0f)]
     private float sensitivity;
 
-    [SerializeField]
-    [Range(0, 10)]
-    private int gravity, jumpHighet;
+    //[SerializeField]
+    // [Range(0, 10)]
+    //private int gravity, jumpHighet;
 
     [SerializeField]
     [Range(0, 3)]
     private float playerHight;// should be set to be just a bit more than the player (use the green debug option in the raycast method to see how big the raycast is)
 
-    [SerializeField]
-    private float jumpSpeed;
-    [SerializeField]
-    private float sinX, sinY, lerpedValue2;// redundant 
+    // [SerializeField]
+    // private float jumpSpeed;
+    // [SerializeField]
+    //private float sinX, sinY, lerpedValue2;// redundant 
 
-    private float duration = 1.0f, lerpedValue, durationJumpPad = 1.0f;
+    private float duration = 1.0f, lerpedValue;
 
-    private bool boostJumpIsActive = false;
+    //private bool boostJumpIsActive = false;
     //private float timeElapsed = 0;
 
     //##___bools___##
-    private bool delayBool = true;//, coroBool = true;
-    public bool allowjump = false, isFalling = false, isJumping = false, cancelJump = false;
+    // private bool delayBool = true;//, coroBool = true;
+
+    private bool allowjump = false, isFalling = false, isJumping = false;
 
     //##___GameObjects___##
 
     public GameObject camObj;
-
+    public PauseMenu pauseScript;
 
     public Transform target;
     private Vector3 velocity = Vector3.zero;
@@ -65,7 +66,7 @@ public class playerMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-       Application.targetFrameRate = 60; // changing fps changes jump hight
+        Application.targetFrameRate = 60; // changing fps changes jump hight
         pauseScript = GetComponent<PauseMenu>();
     }
 
@@ -76,31 +77,32 @@ public class playerMovement : MonoBehaviour
 
         //rb.AddForce(dirV3 * speed);
     }
-    void movementMath()
-    {
-        if (vec3.x > joyStickDeadZone || vec3.x < -joyStickDeadZone || vec3.z > joyStickDeadZone || vec3.z < -joyStickDeadZone)// if more than deadZone // I dislike how long it is ;( // need to remove there is a deadzone option in the input manger 
-        {
-            if (speedx < maxSpeed && delayBool) // increase speedx till max speed
-            {
-                StartCoroutine(speedxDelay());
-            }
+    /*void movementMath()
+     {
+         if (vec3.x > joyStickDeadZone || vec3.x < -joyStickDeadZone || vec3.z > joyStickDeadZone || vec3.z < -joyStickDeadZone)// if more than deadZone // I dislike how long it is ;( // need to remove there is a deadzone option in the input manger 
+         {
+             if (speedx < maxSpeed && delayBool) // increase speedx till max speed
+             {
+                 StartCoroutine(speedxDelay());
+             }
 
-        }
-        else if (vec3.x == 0 || vec3.z == 0) // when still speedx returns to zero
-        {
-            if (speedx > 0)
-            {
-                speedx -= 1;
-            }
-        }
-    }
-    private IEnumerator speedxDelay()// delay to the speed increase so its consistant
-    {
-        delayBool = false; // bool prevents the function from running before the previous attempt has finished
-        speedx += 1;
-        yield return new WaitForSeconds(acceleration);
-        delayBool = true;
-    }
+         }
+         else if (vec3.x == 0 || vec3.z == 0) // when still speedx returns to zero
+         {
+             if (speedx > 0)
+             {
+                 speedx -= 1;
+             }
+         }
+     }
+     private IEnumerator speedxDelay()// delay to the speed increase so its consistant
+     {
+         delayBool = false; // bool prevents the function from running before the previous attempt has finished
+         speedx += 1;
+         yield return new WaitForSeconds(acceleration);
+         delayBool = true;
+     }*/
+
     void OnLook(InputValue input)// looking joystick
     {
         Vector2 look = input.Get<Vector2>();
@@ -115,16 +117,7 @@ public class playerMovement : MonoBehaviour
         if (allowjump)
             StartCoroutine(lerpJump(-1, 1));
 
-        /*switch (allowjump)
-        {
-            case true:
-                for (int i = 0; i < 3; i++)
-                {
-                    gameObject.transform.position += Vector3.up * 1;
-                }
-                //gameObject.transform.position += Vector3.up * jumpHighet; // move player up in the y axis
-                break;
-        }*/
+
     }
 
     IEnumerator lerpJump(float start, float end)
@@ -133,9 +126,9 @@ public class playerMovement : MonoBehaviour
         isJumping = true;
         allowjump = false;
         isFalling = false;
-        cancelJump = false;
+       
         float timeElapsed = 0;
-
+        RaycastHit hit;
         while (timeElapsed < duration)
         {
 
@@ -145,93 +138,35 @@ public class playerMovement : MonoBehaviour
             //jumpVec3 = new Vector3(0, Mathf.Sin(lerpedValue) / 10, 0);
             if (!pauseScript.gamePaused)
                 gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) / 10;
-            //Debug.Log(lerpedValue);
+
             yield return new WaitForEndOfFrame();
 
-            if (lerpedValue > 0 && cancelJump)
+            //if (lerpedValue > 0 && cancelJump)
+            //{
+            //lerpedValue = -1;
+
+
+            //}
+            // have to do another ray cast because method is running in paralell 
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, playerHight) && lerpedValue > 0.2f)
             {
-                //lerpedValue = -1;
-                timeElapsed = 1;
+                timeElapsed = 1; // stops the while loop
 
             }
         }
 
-        // isFalling = true;
         isJumping = false;
+        // isFalling = true;
+
         lerpedValue = end;
     }
 
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag == "BoostPad" && boostJumpIsActive)
-        {
-            Debug.Log("hit boost pad ");
-            StartCoroutine(boostPadJump(-1, 1));
-        }
-        else
-            boostJumpIsActive = true;
-    }
-
-
-    IEnumerator boostPadJump(float start, float end)
-    {
-        boostJumpIsActive = false;
-        float timeElapsed = 0;
-        while (timeElapsed < durationJumpPad)
-        {
-
-            float t = timeElapsed / durationJumpPad;
-            lerpedValue2 = Mathf.Lerp(start, end, t);
-            Debug.Log(lerpedValue2 + " lerpedValue2"); ;
-            timeElapsed += Time.deltaTime;
-            Debug.Log(timeElapsed + " timeElapsed");
-            // jumpVec3 = new Vector3(0, Mathf.Sin(lerpedValue) / 10, 0);
-            //  if (!pauseScript.gamePaused)
-            //    gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) /4;
-
-            /* if (lerpedValue2 > 0 && cancelJump)
-             {
-                 //lerpedValue = -1;
-                 timeElapsed = 1;
-
-             }*/
-        }
-        lerpedValue = end;
-
-        yield return new WaitForEndOfFrame();
-    }
-
-
-    void SinGraphJump()
-    {
-        /* if (timeElapsed < duration)
-         {
-             float t = timeElapsed / duration;
-             lerpedValue = Mathf.Lerp(0, 1, t);
-             timeElapsed += Time.deltaTime;
-             Debug.Log(lerpedValue);
-
-         }
-         else if (timeElapsed > duration)
-         {
-             float t = timeElapsed / duration;
-             lerpedValue = Mathf.Lerp(1, 0, t);
-             timeElapsed -= Time.deltaTime;
-             gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) / 25;
-
-             //lerpedValue = 1;
-         }
-         else
-             lerpedValue = 1;
-        */
-    }
     void fixedGravity()
     {
         switch (isFalling)// makes sure the player is just about hovering over the ground to avoid friction/ collision with the group
         {
             case true:
-                gameObject.transform.position += -Vector3.up * 0.25f;// constant gravity downwards
+                gameObject.transform.position += -Vector3.up * 0.1f;// constant gravity downwards
                 break;
         }
     }
@@ -247,7 +182,7 @@ public class playerMovement : MonoBehaviour
         {
             // Debug.Log("true");
 
-            cancelJump = true;
+            // cancelJump = true;
             allowjump = true;
 
             isFalling = false;
@@ -262,33 +197,9 @@ public class playerMovement : MonoBehaviour
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * playerHight, Color.green);
     }
 
-    /*IEnumerator rayCastDelay()
-    {
-        coroBool = false;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, playerHight))
-        {
-            // Debug.Log("true");
-            cancelJump = true;
-            allowjump = true;
-
-            isFalling = false;
-            // StartCoroutine(cancelJumpDelay());
-
-        }
-        else if (!isJumping)
-        {
-            isFalling = true;
-        }
-
-        yield return new WaitForSeconds(0.1f);
-        
-        coroBool = true;
-    }*/
-
     private void Update()// works every single frame
     {
-        switch (pauseScript.gamePaused) 
+        switch (pauseScript.gamePaused)
         {
             case false:
                 rayCasting();
@@ -306,8 +217,8 @@ public class playerMovement : MonoBehaviour
         {
             case false:
                 var transVec = transform.rotation * (vec3 * maxSpeed); // turns vec into a transform( transforms are local space) Replace 10 with speedx to use movementMath method
-                                                                 //Debug.Log(vec3);
-                                                                 //rb.velocity = transVec;
+                                                                       //Debug.Log(vec3);
+                                                                       //rb.velocity = transVec;
 
                 //rb.AddForce(transVec, ForceMode.VelocityChange);// moves the player( applys the transform to the rigidbody) 
 
@@ -315,13 +226,23 @@ public class playerMovement : MonoBehaviour
                 rb.velocity = transVec; // does not create collision bugs
 
                 GameObject camObj1 = camObj;
+                float camAngle = Quaternion.Angle(transform.rotation, camObj1.transform.rotation);
+                
+            
+                
+                if(camAngle < 60)
+                {
+
+                }
                 camObj1.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
                 gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
-               
+
 
                 target.transform.position = Vector3.SmoothDamp(target.transform.position, gameObject.transform.position, ref velocity, followDelay * Time.deltaTime);// creates a damped interpolrant between the actual player and what the camerea follows
-                target.transform.rotation = camObj.transform.rotation;// tests chase objects rotation to the camera 
-                camObj.transform.position = target.transform.position;// camera follow chase object
+                camObj.transform.position = Vector3.SmoothDamp(camObj.transform.position, gameObject.transform.position, ref velocity, camFollowDelay * Time.deltaTime); // adds a slight delay to the main camera making the game feel so much better 
+                target.transform.rotation = camObj.transform.rotation;//chase objects rotation to the camera 
+
+                //camObj.transform.position = target.transform.position;// camera follow chase object
 
                 fixedGravity();
                 break;
