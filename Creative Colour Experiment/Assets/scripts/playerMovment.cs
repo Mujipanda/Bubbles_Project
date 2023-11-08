@@ -137,7 +137,7 @@ public class playerMovement : MonoBehaviour
             timeElapsed += Time.deltaTime;
             //jumpVec3 = new Vector3(0, Mathf.Sin(lerpedValue) / 10, 0);
             if (!pauseScript.gamePaused)
-                gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) / 10;
+                gameObject.transform.position += -Vector3.up * Mathf.Sin(lerpedValue) /5;
 
             yield return new WaitForEndOfFrame();
 
@@ -166,7 +166,7 @@ public class playerMovement : MonoBehaviour
         switch (isFalling)// makes sure the player is just about hovering over the ground to avoid friction/ collision with the group
         {
             case true:
-                gameObject.transform.position += -Vector3.up * 0.1f;// constant gravity downwards
+                gameObject.transform.position += -Vector3.up * 0.3f;// constant gravity downwards
                 break;
         }
     }
@@ -227,13 +227,7 @@ public class playerMovement : MonoBehaviour
 
                 GameObject camObj1 = camObj;
                 float camAngle = Quaternion.Angle(transform.rotation, camObj1.transform.rotation);
-                
-            
-                
-                if(camAngle < 60)
-                {
-
-                }
+             
                 camObj1.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
                 gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
 

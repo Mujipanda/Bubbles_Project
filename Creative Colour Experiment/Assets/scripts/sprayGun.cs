@@ -1,6 +1,9 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.UI;
+
 public class sprayGun : MonoBehaviour
 {
     [SerializeField]
@@ -13,10 +16,13 @@ public class sprayGun : MonoBehaviour
     private Color32 colour32;
     ControlsInputs controls;
     private int selectedColour = 0;
-    private bool isShooting = false;
+    private bool isShooting = false,  PsEffectOn = false , psEffectOff = true;
     public PauseMenu pauseScript;
+    public buttonScript buttonScript;
     private Rigidbody rb;
-
+    public GameObject colourImage;
+    public TMP_Text colourText;
+    public GameObject[] psEffects;
     int[,] colourRBGValues = new int[5, 3]{ // [ number of rows, number colums]
         //R    G    B
         { 153, 255, 153 },// green
@@ -38,8 +44,23 @@ public class sprayGun : MonoBehaviour
         controls.Enable();
 
         pauseScript = GetComponent<PauseMenu>();
+        
+        for (int i = 0; i < psEffects.Length; i++)
+        {
+            psEffects[i].GetComponent<ParticleSystem>().Stop();
+        }
+        buttonScript = GetComponent<buttonScript>();
     }
+    private void Start()
+    {
+        colourImage.GetComponent<Image>().color = new Color32(153, 255, 153, 255);
+        colourText.text = "Green";
 
+    }
+    private Ray RayPoint()
+    {
+        return Camera.main.ViewportPointToRay(Vector3.one * 0.5f);
+    }
     void OnColourUp()
     {
         StartCoroutine(switchUp());
@@ -51,7 +72,8 @@ public class sprayGun : MonoBehaviour
         else
             selectedColour += 1;
 
-        // Debug.Log(selectedColour);
+        //Debug.Log(selectedColour);
+        switchColourIcon();
         yield return new WaitForEndOfFrame();
     }
 
@@ -71,15 +93,50 @@ public class sprayGun : MonoBehaviour
             selectedColour -= 1;
 
         //Debug.Log(selectedColour);
+        switchColourIcon();
         yield return new WaitForEndOfFrame();
+    }
+
+    void switchColourIcon()
+    {
+        switch( selectedColour )
+        {
+            case 0:
+                //colourImage.color = new Color32(153, 255, 153, 255); // green
+                colourImage.GetComponent<Image>().color = new Color32(153, 255, 153, 255);
+                colourText.text = "Green \n Mass+";
+                break;
+            case 1:
+                //colourImage.color = new Color32(255, 255, 153, 255);// yellow
+                colourImage.GetComponent<Image>().color = new Color32(255, 255, 153, 255);
+                colourText.text = "Yellow \n Mass-";
+                break;
+            case 2:
+                //colourImage.color = new Color32(255, 153, 230, 255);// pink
+                colourImage.GetComponent<Image>().color = new Color32(255, 153, 230, 255);
+                colourText.text = "Pink \n Scale+";
+                break;
+            case 3:
+                // colourImage.color = new Color32(255, 165, 50, 255);// blue
+                colourImage.GetComponent<Image>().color = new Color32(153, 255, 255, 255);
+                colourText.text = "Blue \n Scale-";
+                break;
+            case 4:
+                //colourImage.color = new Color32(255, 165, 50, 255);// orange
+                colourImage.GetComponent<Image>().color = new Color32(255, 165, 50, 255);
+                colourText.text = "Orange";
+                break;
+        }
     }
     IEnumerator shootingDelay()
     {
-        Profiler.BeginSample("Shooting gun");
+       // Profiler.BeginSample("Shooting gun");
         rayCastingGunHit();
-        Profiler.EndSample();
-        yield return new WaitForSeconds(0.01f);
+        //Profiler.EndSample();
+       // yield return new WaitForSeconds(0.01f);
+        yield return new WaitForEndOfFrame();
     }
+    
     void rayCastingGunHit()
     {
 
@@ -189,12 +246,12 @@ public class sprayGun : MonoBehaviour
 
     IEnumerator MassUp()
     {
-        rb.mass += 1;
+        rb.mass += 0.5f;
         yield return new WaitForSeconds(0.01f);
     }
     IEnumerator MassDown()
     {
-        rb.mass -= 1;
+        rb.mass -= 0.5f;
         yield return new WaitForSeconds(0.01f);
     }
 
@@ -203,19 +260,47 @@ public class sprayGun : MonoBehaviour
         switch (selectedColour)
         {
             case 2:
-                currentGameObject.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+                currentGameObject.transform.localScale += new Vector3(0.005f, 0.005f, 0.005f);
                 break;
 
             case 3:
-                currentGameObject.transform.localScale += new Vector3(-0.01f, -0.01f, -0.01f);
+                currentGameObject.transform.localScale += new Vector3(-0.005f, -0.005f, -0.005f);
                 break;
 
         }
     }
 
+    void OnActivate() // pressing button 
+    {
+        RaycastHit hit;
+        Ray ray = RayPoint();
+        int layerMask  = 1 << 6;
+        if(Physics.Raycast(ray, out hit, 3, layerMask))
+        {
+            Debug.Log("Button Pressed");
+            buttonScript.buttonIsPressed = true;
+        }
+    }
+
+    IEnumerator enablePS()
+    {
+        PsEffectOn = true;
+        psEffectOff = false;
+        psEffects[selectedColour].GetComponent<ParticleSystem>().Play();
+        yield return null;
+
+    }
+    IEnumerator disablePS()
+    {
+        psEffectOff= true;
+        PsEffectOn = false;
+        psEffects[selectedColour].GetComponent<ParticleSystem>().Stop();
+        yield return null;
+    }
     // Update is called once per frame
     void Update()
     {
+       
         switch (pauseScript.gamePaused)
         {
             case false:
@@ -227,13 +312,22 @@ public class sprayGun : MonoBehaviour
                 if (controls.Player.Fire.IsPressed())
                 {
                     isShooting = true;
+                    if(!PsEffectOn)
+                        StartCoroutine(enablePS());
+                     
                     //Debug.Log("isPressed");
                 }
                 else
+                {
+                    if(!psEffectOff)
+                        StartCoroutine(disablePS());
+                   
                     isShooting = false;
+                   
+                }
+                    
                 break;
         }
-
 
     }
 
