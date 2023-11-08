@@ -228,7 +228,9 @@ public class playerMovement : MonoBehaviour
                 GameObject camObj1 = camObj;
                 float camAngle = Quaternion.Angle(transform.rotation, camObj1.transform.rotation);
              
-                camObj1.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
+                if(camAngle < 60)
+                    camObj1.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
+
                 gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
 
 
