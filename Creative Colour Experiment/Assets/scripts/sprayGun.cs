@@ -23,6 +23,8 @@ public class sprayGun : MonoBehaviour
     public GameObject colourImage;
     public TMP_Text colourText;
     public GameObject[] psEffects;
+    private int storePrevColour;
+    private bool canStoreColour = true;
     int[,] colourRBGValues = new int[5, 3]{ // [ number of rows, number colums]
         //R    G    B
         { 153, 255, 153 },// green
@@ -292,9 +294,12 @@ public class sprayGun : MonoBehaviour
     }
     IEnumerator disablePS()
     {
+        
         psEffectOff= true;
         PsEffectOn = false;
         psEffects[selectedColour].GetComponent<ParticleSystem>().Stop();
+        psEffects[storePrevColour].GetComponent<ParticleSystem>().Stop();
+        canStoreColour = true;
         yield return null;
     }
     // Update is called once per frame
@@ -311,6 +316,12 @@ public class sprayGun : MonoBehaviour
 
                 if (controls.Player.Fire.IsPressed())
                 {
+                    if (canStoreColour)
+                    {
+                        canStoreColour = false;
+                        storePrevColour = selectedColour;
+                    }
+                        
                     isShooting = true;
                     if(!PsEffectOn)
                         StartCoroutine(enablePS());

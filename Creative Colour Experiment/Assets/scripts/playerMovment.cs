@@ -29,8 +29,8 @@ public class playerMovement : MonoBehaviour
     // private float acceleration; // of seconds / less is faster
 
     [SerializeField]
-    [Range(1.0f, 5.0f)]
-    private float sensitivity;
+    [Range(50, 200)]
+    private int sensitivity;
 
     //[SerializeField]
     // [Range(0, 10)]
@@ -55,6 +55,10 @@ public class playerMovement : MonoBehaviour
 
     private bool allowjump = false, isFalling = false, isJumping = false;
 
+    private float camX = 0f;
+    private float camY = 0f;
+    private float camAngleY = 0f;
+    private float camAngleX = 0f;   
     //##___GameObjects___##
 
     public GameObject camObj;
@@ -226,13 +230,29 @@ public class playerMovement : MonoBehaviour
                 rb.velocity = transVec; // does not create collision bugs
 
                 GameObject camObj1 = camObj;
-                float camAngle = Quaternion.Angle(transform.rotation, camObj1.transform.rotation);
-             
-                if(camAngle < 60)
-                    camObj1.transform.localEulerAngles += new Vector3(-lookVec.y * sensitivity, lookVec.x * sensitivity, 0);// rotates the camera up and down***
+                //float camAngle = Quaternion.Angle(transform.rotation, camObj1.transform.rotation);
+                camX = lookVec.x * sensitivity * Time.deltaTime;// left and right
+                camY = lookVec.y * sensitivity * Time.deltaTime;// up and down 
 
-                gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
 
+
+                camAngleY += -camY;
+                camAngleX += camX;
+                //camObj1.transform.Rotate(camVec);
+
+                camAngleY = Mathf.Clamp(camAngleY, -90f, 90f);// clamps the value of the y value so it can't go above the set amount
+                //Debug.Log(camAngleY);
+                camObj1.transform.localRotation =Quaternion.Euler(camAngleY, camAngleX,0f);// rotates the camera on the x and y axis
+                // if(camAngle < 60)
+                //camObj1.transform.localEulerAngles += new Vector3(0f, campY, 0);
+                
+                //camObj1.transform.localEulerAngles += new Vector3(-campY, lookVec.x * sensitivity, 0f);// rotates the camera up and down***
+
+                //gameObject.transform.localEulerAngles += new Vector3(0, lookVec.x * sensitivity, 0);// rotates the player left and right**
+
+                gameObject.transform.localRotation = Quaternion.Euler(0f,camAngleX, 0); // rotates the camera left and right inline with the camera
+                
+                //camObj1.transform.localRotation = Quaternion.Euler(0f, camAngleX, 0);
 
                 target.transform.position = Vector3.SmoothDamp(target.transform.position, gameObject.transform.position, ref velocity, followDelay * Time.deltaTime);// creates a damped interpolrant between the actual player and what the camerea follows
                 camObj.transform.position = Vector3.SmoothDamp(camObj.transform.position, gameObject.transform.position, ref velocity, camFollowDelay * Time.deltaTime); // adds a slight delay to the main camera making the game feel so much better 
