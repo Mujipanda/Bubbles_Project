@@ -5,6 +5,7 @@ using UnityEngine;
 public class pressurePlate : MonoBehaviour
 {
     public GameObject plate;
+    public bool buttonPressed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -16,11 +17,18 @@ public class pressurePlate : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        int layerMask = 3 << 0;
-        if (Physics.Raycast(plate.transform.position, plate.transform.up, out hit, 0.5f, layerMask))
+        int layerMask = 1 << 3;
+        Debug.DrawLine(new Vector3(0,0,0), new Vector3(0,4,0), Color.white);
+        if (Physics.Raycast(transform.position, transform.up, out hit, 5, layerMask))
         {
-            Debug.DrawLine(plate.transform.position, plate.transform.up);
+
+            buttonPressed = true;
+            
+            //Debug.DrawLine(transform.position, hit.point, Color.green);
+            
             Debug.Log("pressureplate pressed");
         }
+        else 
+            buttonPressed = false;
     }
 }

@@ -180,7 +180,7 @@ public class playerMovement : MonoBehaviour
         //if(coroBool)
         //  StartCoroutine(rayCastDelay());
         RaycastHit hit;
-        int layerMask = 1 << 0;
+        //int layerMask = 1 << 0;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, playerHight))
         {
             // Debug.Log("true");
