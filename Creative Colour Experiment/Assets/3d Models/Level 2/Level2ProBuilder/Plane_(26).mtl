@@ -1,0 +1,16 @@
+newmtl Ceiling
+Kd 0.6886792 0.6009701 0.6009701
+d 1
+
+newmtl Walls
+Kd 0.7924528 0.7924528 0.7924528
+d 1
+
+newmtl Floors
+Kd 0.4433962 0.4433962 0.4433962
+d 1
+
+newmtl Platforms
+Kd 1 1 1
+d 1
+
