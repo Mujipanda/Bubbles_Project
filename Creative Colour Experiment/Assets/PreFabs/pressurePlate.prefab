@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &132578251010221982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3461097246795596282}
+  m_Layer: 0
+  m_Name: PlateCentre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3461097246795596282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132578251010221982}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.873, y: 0.02, z: -0.886}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5625827698719613483}
+  m_Father: {fileID: 7724341547352976594}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4117031082889976689
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,7 +957,7 @@ Transform:
   m_LocalScale: {x: 1.6806, y: 1.181109, z: 1.6806}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5625827698719613483}
+  - {fileID: 3461097246795596282}
   - {fileID: 861936155204503419}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -941,8 +973,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdf1106d2e3dfb43b35316a1311ee3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plate: {fileID: 7658799718390360134}
-  buttonPressed: 0
+  plate: {fileID: 132578251010221982}
+  phsicalPlate: {fileID: 7658799718390360134}
+  presurelateDetectionDistance: 1.851
 --- !u!1 &7658799718390360134
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,11 +1006,11 @@ Transform:
   m_GameObject: {fileID: 7658799718390360134}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.0000000025320495, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1761154, y: 1.1761154, z: 1.1761154}
+  m_LocalPosition: {x: -0.873, y: -0.02, z: 0.886}
+  m_LocalScale: {x: 1.1761153, y: 1.1761154, z: 1.1761153}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7724341547352976594}
+  m_Father: {fileID: 3461097246795596282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &73463421927125818
 MonoBehaviour:

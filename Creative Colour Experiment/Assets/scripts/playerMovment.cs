@@ -7,7 +7,7 @@ public class playerMovement : MonoBehaviour
 {
 
     private Rigidbody rb;
-
+    
     //##___ints___##
     [Header("Movement Vars")]
     [SerializeField]
