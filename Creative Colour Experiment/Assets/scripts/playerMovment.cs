@@ -7,7 +7,7 @@ public class playerMovement : MonoBehaviour
 {
 
     private Rigidbody rb;
-
+    
     //##___ints___##
     [Header("Movement Vars")]
     [SerializeField]
@@ -180,8 +180,9 @@ public class playerMovement : MonoBehaviour
         //if(coroBool)
         //  StartCoroutine(rayCastDelay());
         RaycastHit hit;
-        int layerMask = 1 << 0;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, playerHight))
+        int layerMask = 1 << 7;
+        layerMask = ~layerMask;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, playerHight,layerMask))
         {
             // Debug.Log("true");
 
