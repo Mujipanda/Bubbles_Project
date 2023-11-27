@@ -21,8 +21,8 @@ public class sprayGun : MonoBehaviour
     public PauseMenu pauseScript;
     [Header("button Script (not used)")]
     public buttonScript buttonScript;
-    [Header("The Colour Image within the canvas")]
-    public GameObject colourImage;
+   // [Header("The Colour Image within the canvas")]
+   // public GameObject colourImage;
     [Header("Colour test from canvas")]
     public TMP_Text colourText;
     [Header("The Colour particles effects ,order:\nG, Y, P, B")]
@@ -81,7 +81,7 @@ public class sprayGun : MonoBehaviour
     }
     private void Start()
     {
-        colourImage.GetComponent<Image>().color = new Color32(153, 255, 153, 255);
+        //colourImage.GetComponent<Image>().color = new Color32(153, 255, 153, 255);
         colourText.text = "Green";
         colourWheelSprites[selectedColour].GetComponent<Image>().enabled = true;
     }
@@ -115,7 +115,7 @@ public class sprayGun : MonoBehaviour
     }
     void OnColourUp()
     {
-        StartCoroutine(switchUp());
+        //StartCoroutine(switchUp()); ## old colour switching method
     }
     IEnumerator switchUp()
     {
@@ -132,7 +132,7 @@ public class sprayGun : MonoBehaviour
     void OnColourDown()
     {
 
-        StartCoroutine(switchDown());
+        //StartCoroutine(switchDown()); ## old colour switching method
 
     }
 

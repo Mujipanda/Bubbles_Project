@@ -93,11 +93,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 601458807433208513}
+  - {fileID: 2616396624015228529}
   - {fileID: 7864396794169119908}
   - {fileID: 5727607084261169062}
-  - {fileID: 7156580237145703257}
-  - {fileID: 7093049852394214440}
+  - {fileID: 7671176803276039883}
+  - {fileID: 7436826231644310090}
   m_Father: {fileID: 4781244064849303964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8555824876968564993
@@ -110,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4781244064849303964}
   m_Layer: 0
-  m_Name: gun transform
+  m_Name: Gun Pos
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b225d31a6f97dc2458a18c220b9f9910, type: 3}
---- !u!4 &601458807433208513 stripped
+--- !u!4 &2616396624015228529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4300237641537324779, guid: b225d31a6f97dc2458a18c220b9f9910,
     type: 3}
@@ -383,7 +383,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22ef147801f25aa4281e75225c4705e4, type: 3}
---- !u!4 &7093049852394214440 stripped
+--- !u!4 &7436826231644310090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2344001906503235664, guid: 22ef147801f25aa4281e75225c4705e4,
     type: 3}
@@ -462,7 +462,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6ea3ec4423746b459a7595b6971b201, type: 3}
---- !u!4 &7156580237145703257 stripped
+--- !u!4 &7671176803276039883 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2430050289404358433, guid: f6ea3ec4423746b459a7595b6971b201,
     type: 3}
