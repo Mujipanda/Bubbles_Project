@@ -1,30 +1,52 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public class sprayGun : MonoBehaviour
 {
+    [Header(" input the model of the sprayGun")]
     [SerializeField]
-    private Transform gunTransform, chaseTransform, cameraTransform, gunPos;
+    private Transform SprayGunModel;
+
+    [Header(" input the Main Camera")]
+    [SerializeField]
+    private Transform cameraObject;
+
+    [Header("Input Gun Pos from scene")]
+    [SerializeField]
+    private Transform gunPos;
+
+    [Header("pause script from player")]
+    public PauseMenu pauseScript;
+    [Header("button Script (not used)")]
+    public buttonScript buttonScript;
+    [Header("The Colour Image within the canvas")]
+    public GameObject colourImage;
+    [Header("Colour test from canvas")]
+    public TMP_Text colourText;
+    [Header("The Colour particles effects ,order:\nG, Y, P, B")]
+    public GameObject[] psEffects;
+    [Header("The Colour Wheel Sprites ,order:\nG, Y, P, B")]
+    public GameObject[] colourWheelSprites;
+
     private GameObject currentGameObject;
 
-    
     private Vector3 gizmoPoint = Vector3.zero;
-  
+
     private Color32 colour32;
+
     ControlsInputs controls;
+
     private int selectedColour = 0;
-    private bool isShooting = false,  PsEffectOn = false , psEffectOff = true;
-    public PauseMenu pauseScript;
-    public buttonScript buttonScript;
+
+    private bool isShooting = false, PsEffectOn = false, psEffectOff = true;
     private Rigidbody rb;
-    public GameObject colourImage;
-    public TMP_Text colourText;
-    public GameObject[] psEffects;
+
     private int storePrevColour;
+
     private bool canStoreColour = true;
+
     int[,] colourRBGValues = new int[5, 3]{ // [ number of rows, number colums]
         //R    G    B
         { 153, 255, 153 },// green
@@ -32,13 +54,13 @@ public class sprayGun : MonoBehaviour
         { 255, 153, 230 },// pink
         { 153, 255, 255 },// blue
         { 255, 165, 50 },// orange
-        // no value shall be 0 or colours will 
+        // no value shall be 0 or colours will not work
     };
 
 
     private void Awake()
     {
-       
+
         //colour = new Color(1.0f, 1.0f, 1.0f);
         colour32 = new Color32(255, 255, 255, 255);
 
@@ -46,19 +68,47 @@ public class sprayGun : MonoBehaviour
         controls.Enable();
 
         pauseScript = GetComponent<PauseMenu>();
-        
+
         for (int i = 0; i < psEffects.Length; i++)
         {
             psEffects[i].GetComponent<ParticleSystem>().Stop();
         }
         buttonScript = GetComponent<buttonScript>();
+        for (int i = 0; i < colourWheelSprites.Length; i++)
+        {
+            colourWheelSprites[i].GetComponent<Image>().enabled = false;
+        }
     }
     private void Start()
     {
         colourImage.GetComponent<Image>().color = new Color32(153, 255, 153, 255);
         colourText.text = "Green";
-
+        colourWheelSprites[selectedColour].GetComponent<Image>().enabled = true;
     }
+   
+    void OnGreen()
+    {
+        selectedColour = 0;
+        switchColourIcon();
+    }
+    void OnYellow()
+    {
+        selectedColour = 1;
+        switchColourIcon();
+    }
+    void OnBlue()
+    {
+        selectedColour = 3;
+        switchColourIcon();
+    }
+    void OnPink()
+    {
+        selectedColour = 2;
+        switchColourIcon();
+    }
+    
+
+
     private Ray RayPoint()
     {
         return Camera.main.ViewportPointToRay(Vector3.one * 0.5f);
@@ -101,7 +151,31 @@ public class sprayGun : MonoBehaviour
 
     void switchColourIcon()
     {
-        switch( selectedColour )
+        for (int i = 0; i < colourWheelSprites.Length; i++)
+        {
+            colourWheelSprites[i].GetComponent<Image>().enabled = false;
+            if (i == selectedColour)
+            {
+                colourWheelSprites[i].GetComponent<Image>().enabled = true;
+            }
+        }
+      /*  switch (selectedColour)
+        {
+            case 0:
+                
+                break;
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+
+        }
+        switch (selectedColour)
         {
             case 0:
                 //colourImage.color = new Color32(153, 255, 153, 255); // green
@@ -128,23 +202,23 @@ public class sprayGun : MonoBehaviour
                 colourImage.GetComponent<Image>().color = new Color32(255, 165, 50, 255);
                 colourText.text = "Orange";
                 break;
-        }
+        }*/
     }
     IEnumerator shootingDelay()
     {
-       // Profiler.BeginSample("Shooting gun");
+        // Profiler.BeginSample("Shooting gun");
         rayCastingGunHit();
         //Profiler.EndSample();
-       // yield return new WaitForSeconds(0.01f);
+        // yield return new WaitForSeconds(0.01f);
         yield return new WaitForEndOfFrame();
     }
-    
+
     void rayCastingGunHit()
     {
 
         RaycastHit hit;
         int layerMask = 1 << 3;
-        if (Physics.Raycast(gunTransform.position, cameraTransform.forward, out hit, 20, layerMask))
+        if (Physics.Raycast(SprayGunModel.position, cameraObject.forward, out hit, 20, layerMask))
         {
 
             //Debug.Log("hitting Object");
@@ -159,7 +233,7 @@ public class sprayGun : MonoBehaviour
                 ChangeColour(selectedColour, colour32);
             }
         }
-        // Debug.DrawLine(gunTransform.position, transform.TransformDirection(Vector3.forward) * 100, Color.green);
+        // Debug.DrawLine(SprayGunModel.position, transform.TransformDirection(Vector3.forward) * 100, Color.green);
     }
 
     void ChangeColour(int selectedColour, Color32 colour)
@@ -229,7 +303,7 @@ public class sprayGun : MonoBehaviour
         {
             case 0:
                 StartCoroutine(MassUp());
-                
+
                 rb.useGravity = true;
                 break;
 
@@ -237,7 +311,7 @@ public class sprayGun : MonoBehaviour
                 if (rb.mass > 1)
                 {
                     StartCoroutine(MassDown());
-                   
+
                 }
                 else if (rb.mass < 1)
                     rb.useGravity = false;
@@ -276,8 +350,8 @@ public class sprayGun : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = RayPoint();
-        int layerMask  = 1 << 6;
-        if(Physics.Raycast(ray, out hit, 3, layerMask))
+        int layerMask = 1 << 6;
+        if (Physics.Raycast(ray, out hit, 3, layerMask))
         {
             Debug.Log("Button Pressed");
             buttonScript.buttonIsPressed = true;
@@ -294,8 +368,8 @@ public class sprayGun : MonoBehaviour
     }
     IEnumerator disablePS()
     {
-        
-        psEffectOff= true;
+
+        psEffectOff = true;
         PsEffectOn = false;
         psEffects[selectedColour].GetComponent<ParticleSystem>().Stop();
         psEffects[storePrevColour].GetComponent<ParticleSystem>().Stop();
@@ -305,7 +379,7 @@ public class sprayGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
         switch (pauseScript.gamePaused)
         {
             case false:
@@ -321,22 +395,22 @@ public class sprayGun : MonoBehaviour
                         canStoreColour = false;
                         storePrevColour = selectedColour;
                     }
-                        
+
                     isShooting = true;
-                    if(!PsEffectOn)
+                    if (!PsEffectOn)
                         StartCoroutine(enablePS());
-                     
+
                     //Debug.Log("isPressed");
                 }
                 else
                 {
-                    if(!psEffectOff)
+                    if (!psEffectOff)
                         StartCoroutine(disablePS());
-                   
+
                     isShooting = false;
-                   
+
                 }
-                    
+
                 break;
         }
 
@@ -344,8 +418,8 @@ public class sprayGun : MonoBehaviour
 
     private void FixedUpdate()
     {
-        gunTransform.position = gunPos.position;
-        gunTransform.rotation = gunPos.rotation;
+        SprayGunModel.position = gunPos.position;
+        SprayGunModel.rotation = gunPos.rotation;
 
     }
 

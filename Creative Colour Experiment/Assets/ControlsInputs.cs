@@ -116,6 +116,42 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Green"",
+                    ""type"": ""Button"",
+                    ""id"": ""25666704-fbcb-46b7-8495-a47fd4acd688"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Yellow"",
+                    ""type"": ""Button"",
+                    ""id"": ""90be922c-8b7b-4a20-b5f5-6223dc92145f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Blue"",
+                    ""type"": ""Button"",
+                    ""id"": ""fffc5b85-a1d2-49cb-98c4-0173bca31ef9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pink"",
+                    ""type"": ""Button"",
+                    ""id"": ""7c05da1d-4d0d-47a2-bbf3-ebab5c35b839"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -734,6 +770,50 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Activate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9854f545-18a3-447d-ab09-3a1f3525ddcb"",
+                    ""path"": ""<XInputController>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Yellow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa844e74-7d43-4eed-a88c-369d41701c8b"",
+                    ""path"": ""<XInputController>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Blue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b10c726-b62c-4507-ba7e-eaf67ae2eacc"",
+                    ""path"": ""<XInputController>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Green"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e27e9e5-b10a-4a65-ade0-601577625034"",
+                    ""path"": ""<XInputController>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pink"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -752,6 +832,10 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Green = m_Player.FindAction("Green", throwIfNotFound: true);
+        m_Player_Yellow = m_Player.FindAction("Yellow", throwIfNotFound: true);
+        m_Player_Blue = m_Player.FindAction("Blue", throwIfNotFound: true);
+        m_Player_Pink = m_Player.FindAction("Pink", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -823,6 +907,10 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Green;
+    private readonly InputAction m_Player_Yellow;
+    private readonly InputAction m_Player_Blue;
+    private readonly InputAction m_Player_Pink;
     public struct PlayerActions
     {
         private @ControlsInputs m_Wrapper;
@@ -837,6 +925,10 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @Green => m_Wrapper.m_Player_Green;
+        public InputAction @Yellow => m_Wrapper.m_Player_Yellow;
+        public InputAction @Blue => m_Wrapper.m_Player_Blue;
+        public InputAction @Pink => m_Wrapper.m_Player_Pink;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -876,6 +968,18 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @Green.started += instance.OnGreen;
+            @Green.performed += instance.OnGreen;
+            @Green.canceled += instance.OnGreen;
+            @Yellow.started += instance.OnYellow;
+            @Yellow.performed += instance.OnYellow;
+            @Yellow.canceled += instance.OnYellow;
+            @Blue.started += instance.OnBlue;
+            @Blue.performed += instance.OnBlue;
+            @Blue.canceled += instance.OnBlue;
+            @Pink.started += instance.OnPink;
+            @Pink.performed += instance.OnPink;
+            @Pink.canceled += instance.OnPink;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -910,6 +1014,18 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @Green.started -= instance.OnGreen;
+            @Green.performed -= instance.OnGreen;
+            @Green.canceled -= instance.OnGreen;
+            @Yellow.started -= instance.OnYellow;
+            @Yellow.performed -= instance.OnYellow;
+            @Yellow.canceled -= instance.OnYellow;
+            @Blue.started -= instance.OnBlue;
+            @Blue.performed -= instance.OnBlue;
+            @Blue.canceled -= instance.OnBlue;
+            @Pink.started -= instance.OnPink;
+            @Pink.performed -= instance.OnPink;
+            @Pink.canceled -= instance.OnPink;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -939,5 +1055,9 @@ public partial class @ControlsInputs: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnGreen(InputAction.CallbackContext context);
+        void OnYellow(InputAction.CallbackContext context);
+        void OnBlue(InputAction.CallbackContext context);
+        void OnPink(InputAction.CallbackContext context);
     }
 }
