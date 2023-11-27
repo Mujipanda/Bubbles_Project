@@ -10,7 +10,7 @@ public class platform : MonoBehaviour
     [Header("expand the array to two and drag point 1 and point 2 into the array")]
     public Transform[] points;
 
-
+    public GameObject platformCentre;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +27,13 @@ public class platform : MonoBehaviour
     {
         if (button.buttonActive)
         {
-            Debug.Log("platform active");
-            Transform childTrn;
+            //Debug.Log("platform active");
+            //Transform childTrn;
 
-            childTrn = this.gameObject.transform.GetChild(0);
+            //childTrn = this.gameObject.transform.GetChild(0);
 
-             childTrn.transform.position = Vector3.MoveTowards(transform.position, points[1].transform.position, 0.5f * Time.deltaTime);
+            platformCentre.transform.position = Vector3.MoveTowards(platformCentre.transform.position, points[0].transform.position, 0.5f *Time.deltaTime);
+            //childTrn.transform.position = Vector3.MoveTowards(transform.position, points[1].transform.position, 0.5f * Time.deltaTime);
         }
     }
 }
