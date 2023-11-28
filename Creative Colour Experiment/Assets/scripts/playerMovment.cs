@@ -64,6 +64,7 @@ public class playerMovement : MonoBehaviour
     public GameObject camObj;
     public PauseMenu pauseScript;
 
+    [Header("Input Chase Object From scene")]
     public Transform target;
     private Vector3 velocity = Vector3.zero;
 
