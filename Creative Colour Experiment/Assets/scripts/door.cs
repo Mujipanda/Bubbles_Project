@@ -6,54 +6,35 @@ using UnityEngine;
 
 public class door : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject[] doors;
-    [SerializeField]
-    private Transform[] openPosition;
+    [Header("drag the script from the button you wish the door responds from")]
+    public pressurePlate button;
 
-    private bool openDoor = false;
-    private Vector3 velocity = Vector3.zero;
-    // Start is called before the first frame update
-    void Start()
+    [Header("Input the left and right door pivotPoints here \n>left door in 0, right door in 1")]
+    [SerializeField]
+    private Transform[] doorsPivotPoints;
+
+    [Header("Input the left and right door OpenPoints here \n>left door in 0, right door in 1")]
+    [SerializeField]
+    private Transform[] doorsOpenPos;
+
+    [SerializeField]
+    private GameObject doorCollider;
+
+    private void Start()
     {
-        
+        doorCollider.GetComponent<Collider>().enabled = true;
     }
-
-
-    private void OnTriggerEnter(Collider other)
+    private void FixedUpdate()
     {
-
-        if (other.gameObject.tag =="Player")
+        if(button.buttonActive) 
         {
-            openDoor = true;
+            doorCollider.GetComponent<Collider>().enabled = false;
+            for(int i = 0; i < doorsPivotPoints.Length; i++)
+            {
+
+               doorsPivotPoints[i].transform.position = Vector3.MoveTowards(doorsOpenPos[i].transform.position, new Vector3(doorsPivotPoints[i].transform.position.x - 1, doorsPivotPoints[i].transform.position.y, doorsPivotPoints[i].transform.position.z), 2f * Time.deltaTime);
+            }
             
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject.tag == "Player")
-        {
-            openDoor= false;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (openDoor)
-            openDoors();
-        else
-            closeDoors();
-    }
-
-    void openDoors()
-    {
-        //doors[0].transform.position = Vector3.SmoothDamp(doors[0].transform.position, openPosition[0].transform.position, ref velocity, 10 * Time.deltaTime);
-        //doors[1].transform.position = Vector3.SmoothDamp(doors[1].transform.position, openPosition[0].transform.position, ref velocity, 10 * Time.deltaTime);
-
-    }
-    void closeDoors()
-    {
-        
     }
 }

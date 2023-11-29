@@ -974,8 +974,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plate: {fileID: 132578251010221982}
-  phsicalPlate: {fileID: 7658799718390360134}
-  presurelateDetectionDistance: 1.851
+  presurelateDetectionDistance: 0.6
+  buttonTravelDistance: 0.25
 --- !u!1 &7658799718390360134
 GameObject:
   m_ObjectHideFlags: 0

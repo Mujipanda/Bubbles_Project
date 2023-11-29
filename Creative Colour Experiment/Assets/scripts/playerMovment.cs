@@ -111,8 +111,12 @@ public class playerMovement : MonoBehaviour
     void OnLook(InputValue input)// looking joystick
     {
         Vector2 look = input.Get<Vector2>();
+        look.x = Mathf.Clamp(look.x, -1, 1);
+        look.y = Mathf.Clamp(look.y, -1, 1);
         lookVec = new Vector3(look.x, look.y, 0);
+        //Debug.Log(lookVec);
         // Debug.Log(lookVec.x + " X " + lookVec.y + " Y ");
+        
     }
 
     void OnJump()
@@ -234,6 +238,8 @@ public class playerMovement : MonoBehaviour
                 //float camAngle = Quaternion.Angle(transform.rotation, camObj1.transform.rotation);
                 camX = lookVec.x * sensitivity * Time.deltaTime;// left and right
                 camY = lookVec.y * sensitivity * Time.deltaTime;// up and down 
+                //Debug.Log(camX);
+                //Debug.Log(lookVec.x);
 
 
 
