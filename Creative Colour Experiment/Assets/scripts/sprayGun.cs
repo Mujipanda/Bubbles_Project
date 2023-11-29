@@ -21,8 +21,8 @@ public class sprayGun : MonoBehaviour
     public PauseMenu pauseScript;
     [Header("button Script (not used)")]
     public buttonScript buttonScript;
-   // [Header("The Colour Image within the canvas")]
-   // public GameObject colourImage;
+    // [Header("The Colour Image within the canvas")]
+    // public GameObject colourImage;
     [Header("Colour test from canvas")]
     public TMP_Text colourText;
     [Header("The Colour particles effects ,order:\nG, Y, P, B")]
@@ -85,7 +85,7 @@ public class sprayGun : MonoBehaviour
         colourText.text = "Green";
         colourWheelSprites[selectedColour].GetComponent<Image>().enabled = true;
     }
-   
+
     void OnGreen()
     {
         selectedColour = 0;
@@ -106,7 +106,7 @@ public class sprayGun : MonoBehaviour
         selectedColour = 2;
         switchColourIcon();
     }
-    
+
 
 
     private Ray RayPoint()
@@ -159,50 +159,68 @@ public class sprayGun : MonoBehaviour
                 colourWheelSprites[i].GetComponent<Image>().enabled = true;
             }
         }
-      /*  switch (selectedColour)
-        {
-            case 0:
-                
-                break;
-            case 1:
-
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-
-        }
         switch (selectedColour)
         {
             case 0:
-                //colourImage.color = new Color32(153, 255, 153, 255); // green
-                colourImage.GetComponent<Image>().color = new Color32(153, 255, 153, 255);
-                colourText.text = "Green \n Mass+";
+                
+                colourText.text = "Green";
                 break;
             case 1:
-                //colourImage.color = new Color32(255, 255, 153, 255);// yellow
-                colourImage.GetComponent<Image>().color = new Color32(255, 255, 153, 255);
-                colourText.text = "Yellow \n Mass-";
+                colourText.text = "Yellow";
                 break;
             case 2:
-                //colourImage.color = new Color32(255, 153, 230, 255);// pink
-                colourImage.GetComponent<Image>().color = new Color32(255, 153, 230, 255);
-                colourText.text = "Pink \n Scale+";
+                colourText.text = "Pink";
                 break;
             case 3:
-                // colourImage.color = new Color32(255, 165, 50, 255);// blue
-                colourImage.GetComponent<Image>().color = new Color32(153, 255, 255, 255);
-                colourText.text = "Blue \n Scale-";
+                colourText.text = "Blue";
                 break;
-            case 4:
-                //colourImage.color = new Color32(255, 165, 50, 255);// orange
-                colourImage.GetComponent<Image>().color = new Color32(255, 165, 50, 255);
-                colourText.text = "Orange";
-                break;
-        }*/
+
+        }
+
+        /*  switch (selectedColour)
+          {
+              case 0:
+
+                  break;
+              case 1:
+
+                  break;
+              case 2:
+
+                  break;
+              case 3:
+
+                  break;
+
+          }
+          switch (selectedColour)
+          {
+              case 0:
+                  //colourImage.color = new Color32(153, 255, 153, 255); // green
+                  colourImage.GetComponent<Image>().color = new Color32(153, 255, 153, 255);
+                  colourText.text = "Green \n Mass+";
+                  break;
+              case 1:
+                  //colourImage.color = new Color32(255, 255, 153, 255);// yellow
+                  colourImage.GetComponent<Image>().color = new Color32(255, 255, 153, 255);
+                  colourText.text = "Yellow \n Mass-";
+                  break;
+              case 2:
+                  //colourImage.color = new Color32(255, 153, 230, 255);// pink
+                  colourImage.GetComponent<Image>().color = new Color32(255, 153, 230, 255);
+                  colourText.text = "Pink \n Scale+";
+                  break;
+              case 3:
+                  // colourImage.color = new Color32(255, 165, 50, 255);// blue
+                  colourImage.GetComponent<Image>().color = new Color32(153, 255, 255, 255);
+                  colourText.text = "Blue \n Scale-";
+                  break;
+              case 4:
+                  //colourImage.color = new Color32(255, 165, 50, 255);// orange
+                  colourImage.GetComponent<Image>().color = new Color32(255, 165, 50, 255);
+                  colourText.text = "Orange";
+                  break;
+          }*/
     }
     IEnumerator shootingDelay()
     {

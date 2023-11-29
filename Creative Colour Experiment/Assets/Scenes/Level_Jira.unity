@@ -16,9 +16,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogColor: {r: 1, g: 0.9352635, b: 0.8066038, a: 1}
+  m_FogMode: 2
+  m_FogDensity: 0.02
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -28,7 +28,7 @@ RenderSettings:
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
-  m_HaloStrength: 0.5
+  m_HaloStrength: 0.483
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -719,6 +719,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5448244202877669129, guid: ecc79332513b9bd46a6fa5df417f13c3,
     type: 3}
   m_PrefabInstance: {fileID: 2058450777}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &252277362 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8534692309934017395, guid: 7bfc3a37d73d44643a8289540a14e25b,
+    type: 3}
+  m_PrefabInstance: {fileID: 925180007}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &253093999
 PrefabInstance:
@@ -6681,36 +6687,16 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1766340207}
-    - target: {fileID: 1148851574494813676, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
-      propertyPath: sensitivity
-      value: 152
-      objectReference: {fileID: 0}
     - target: {fileID: 1811523382773834894, guid: ac232c0801619f542ab39cfeccbeb831,
         type: 3}
       propertyPath: PauseUI
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1811523382773834894, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
-      propertyPath: gamePaused
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 252277362}
     - target: {fileID: 2162940103233237996, guid: ac232c0801619f542ab39cfeccbeb831,
         type: 3}
       propertyPath: holdzone
       value: 
       objectReference: {fileID: 1762152802}
-    - target: {fileID: 2718056304155724423, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
-      propertyPath: m_Height
-      value: 0.6782562
-      objectReference: {fileID: 0}
-    - target: {fileID: 2718056304155724423, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
-      propertyPath: m_Center.y
-      value: -0.16087183
-      objectReference: {fileID: 0}
     - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
         type: 3}
       propertyPath: gunPos
@@ -6723,34 +6709,14 @@ PrefabInstance:
       objectReference: {fileID: 925180012}
     - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
         type: 3}
-      propertyPath: colourImage
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
       propertyPath: cameraObject
       value: 
       objectReference: {fileID: 850384870}
     - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
         type: 3}
-      propertyPath: gunTransform
-      value: 
-      objectReference: {fileID: 902917738}
-    - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
       propertyPath: SprayGunModel
       value: 
       objectReference: {fileID: 902917738}
-    - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
-      propertyPath: chaseTransform
-      value: 
-      objectReference: {fileID: 1766340207}
-    - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
-      propertyPath: cameraTransform
-      value: 
-      objectReference: {fileID: 850384870}
     - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
         type: 3}
       propertyPath: psEffects.Array.data[0]
@@ -6776,11 +6742,6 @@ PrefabInstance:
       propertyPath: psEffects.Array.data[4]
       value: 
       objectReference: {fileID: 1766340209}
-    - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
-        type: 3}
-      propertyPath: colourWheelSprites.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4093156004966948900, guid: ac232c0801619f542ab39cfeccbeb831,
         type: 3}
       propertyPath: colourWheelSprites.Array.data[0]
@@ -8844,7 +8805,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 2013124771}
     m_Modifications:
     - target: {fileID: 73463421927125818, guid: 2dfa2ddf0d6de184488aac79d47c0f27,
         type: 3}
@@ -8894,17 +8855,17 @@ PrefabInstance:
     - target: {fileID: 7724341547352976594, guid: 2dfa2ddf0d6de184488aac79d47c0f27,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 56.691715
+      value: -4.2082863
       objectReference: {fileID: 0}
     - target: {fileID: 7724341547352976594, guid: 2dfa2ddf0d6de184488aac79d47c0f27,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.392
+      value: 0.29021883
       objectReference: {fileID: 0}
     - target: {fileID: 7724341547352976594, guid: 2dfa2ddf0d6de184488aac79d47c0f27,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.334284
+      value: 0.73428345
       objectReference: {fileID: 0}
     - target: {fileID: 7724341547352976594, guid: 2dfa2ddf0d6de184488aac79d47c0f27,
         type: 3}
@@ -8958,6 +8919,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdf1106d2e3dfb43b35316a1311ee3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1308451440 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7724341547352976594, guid: 2dfa2ddf0d6de184488aac79d47c0f27,
+    type: 3}
+  m_PrefabInstance: {fileID: 1308451438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1308644971
 GameObject:
   m_ObjectHideFlags: 0
@@ -11814,6 +11781,7 @@ Transform:
   - {fileID: 687771885}
   - {fileID: 971847068}
   - {fileID: 131292194}
+  - {fileID: 1308451440}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2038647963
@@ -12677,4 +12645,3 @@ SceneRoots:
   - {fileID: 32924537}
   - {fileID: 359071564}
   - {fileID: 2013124771}
-  - {fileID: 1308451438}

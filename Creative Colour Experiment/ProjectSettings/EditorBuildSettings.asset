@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 7a52bb3576e0f2748809601a38c5f161
+  - enabled: 1
+    path: Assets/Scenes/Level_Jira.unity
+    guid: 4e2837259cbf54f4992b020449456f3d
   m_configObjects: {}

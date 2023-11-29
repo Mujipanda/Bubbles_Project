@@ -58,9 +58,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.17
-  m_Height: 1
+  m_Height: 0.6782562
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.16087183, z: 0}
 --- !u!54 &2414653292868924458
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   maxSpeed: 7
   followDelay: 5
   camFollowDelay: 5
-  sensitivity: 122
+  sensitivity: 152
   playerHight: 1.63
   camObj: {fileID: 0}
   pauseScript: {fileID: 1811523382773834894}
@@ -165,16 +165,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13b03bbfba89e04b80a714d91bf9292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunTransform: {fileID: 0}
-  chaseTransform: {fileID: 0}
-  cameraTransform: {fileID: 0}
+  SprayGunModel: {fileID: 0}
+  cameraObject: {fileID: 0}
   gunPos: {fileID: 0}
   pauseScript: {fileID: 1811523382773834894}
   buttonScript: {fileID: 0}
-  colourImage: {fileID: 0}
   colourText: {fileID: 0}
   psEffects:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  colourWheelSprites:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
