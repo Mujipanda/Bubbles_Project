@@ -55,10 +55,10 @@ public class platform : MonoBehaviour
             switch (switchInt)
             {
                 case 0:
-                    platformCentre.transform.position = Vector3.MoveTowards(platformCentre.transform.position, points[0].transform.position, 0.5f * Time.deltaTime);
+                    platformCentre.transform.position = Vector3.MoveTowards(platformCentre.transform.position, points[0].transform.position, 1f * Time.deltaTime);
                     break;
                 case 1:
-                    platformCentre.transform.position = Vector3.MoveTowards(platformCentre.transform.position, points[1].transform.position, 0.5f * Time.deltaTime);
+                    platformCentre.transform.position = Vector3.MoveTowards(platformCentre.transform.position, points[1].transform.position, 1f * Time.deltaTime);
                     break;
             }
 

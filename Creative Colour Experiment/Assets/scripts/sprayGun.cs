@@ -340,12 +340,19 @@ public class sprayGun : MonoBehaviour
 
     IEnumerator MassUp()
     {
-        rb.mass += 0.5f;
+        //float massClamp =rb.mass;
+        //massClamp += 0.1f;
+       // massClamp = Mathf.Clamp(massClamp, 1, 100);
+        //rb.mass = massClamp;
+        rb.mass += 0.2f;
         yield return new WaitForSeconds(0.01f);
     }
     IEnumerator MassDown()
     {
-        rb.mass -= 0.5f;
+        float massClap = rb.mass;
+        massClap -= 0.2f;
+        massClap = Mathf.Clamp(massClap, 1, 100);
+        rb.mass = massClap;
         yield return new WaitForSeconds(0.01f);
     }
 
@@ -354,11 +361,11 @@ public class sprayGun : MonoBehaviour
         switch (selectedColour)
         {
             case 2:
-                currentGameObject.transform.localScale += new Vector3(0.005f, 0.005f, 0.005f);
+                currentGameObject.transform.localScale += new Vector3(0.004f, 0.004f, 0.004f);
                 break;
 
             case 3:
-                currentGameObject.transform.localScale += new Vector3(-0.005f, -0.005f, -0.005f);
+                currentGameObject.transform.localScale += new Vector3(-0.004f, -0.004f, -0.004f);
                 break;
 
         }
