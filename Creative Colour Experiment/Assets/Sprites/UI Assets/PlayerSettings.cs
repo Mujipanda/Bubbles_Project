@@ -8,15 +8,16 @@ public class PlayerSettings : MonoBehaviour
 
     private void Awake()
     {
-        // Load the saved sensitivity value when the game starts
+        // Load the saved sensitivity on game launch
         cameraSensitivity = PlayerPrefs.GetFloat(SensitivityKey, cameraSensitivity);
     }
 
     public void UpdateSensitivity(float newSensitivity)
     {
         cameraSensitivity = newSensitivity;
-        // Save the new sensitivity value
+        // Save new sensitivity value
         PlayerPrefs.SetFloat(SensitivityKey, cameraSensitivity);
+        Debug.Log("New Sensitivity: " + cameraSensitivity);
     }
 
     public float GetSensitivity()

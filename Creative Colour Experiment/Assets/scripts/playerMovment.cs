@@ -30,7 +30,7 @@ public class playerMovement : MonoBehaviour
 
     [SerializeField]
     [Range(50, 200)]
-    private int sensitivity;
+    public float sensitivity;
 
     //[SerializeField]
     // [Range(0, 10)]
