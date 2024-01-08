@@ -11,7 +11,7 @@ public class CameraSensitivityManager : MonoBehaviour
         if (PlayerMovementScript && PlayerSettingsScript)
         {
             float currentSensitivity = PlayerSettingsScript.GetSensitivity();
-            PlayerMovementScript.sensitivity = currentSensitivity * 50;
+            PlayerMovementScript.sensitivity = currentSensitivity * 200;
             Debug.Log("Applied Sensitivity: " + currentSensitivity);
         }
     }

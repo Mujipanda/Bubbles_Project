@@ -5,6 +5,13 @@ public class PauseMenu : MonoBehaviour
     public GameObject PauseUI;
     public bool gamePaused = false;
 
+
+    private void Start()
+    {
+        PauseUI.SetActive(false);
+        Time.timeScale = 1f;
+        gamePaused = false;
+    }
     void OnPause()
     {
         Debug.Log("pause");
